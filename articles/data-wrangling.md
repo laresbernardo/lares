@@ -318,11 +318,11 @@ corr_var(dft_clean, Survived_TRUE, top = 8, max_pvalue = 0.05)
 ### Blog Posts & Tutorials
 
 - **Find Insights with Ranked Cross-Correlations:**
-  [DataScience+](https://datascienceplus.com/find-insights-with-ranked-cross-correlations/)
+  [DataScience+](https://laresbernardo.github.io/lares/reference/corr_cross.html)
 - **Visualize Monthly Income Distribution and Spend Curve:**
-  [DataScience+](https://datascienceplus.com/visualize-monthly-income-distribution-and-spend-curve/)
+  [DataScience+](https://laresbernardo.github.io/lares/reference/distr.html)
 - **All lares articles:** [Author page on
-  DataScience+](https://datascienceplus.com/author/bernardo-lares/)
+  DataScience+](https://laresbernardo.github.io/lares/articles/)
 
 ## Next Steps
 

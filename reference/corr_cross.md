@@ -96,7 +96,7 @@ correlation value, with a data.frame `plot = FALSE` or plot
 
 For a detailed tutorial on using this function, see: [Find Insights with
 Ranked
-Cross-Correlations](https://datascienceplus.com/find-insights-with-ranked-cross-correlations/)
+Cross-Correlations](https://www.r-bloggers.com/2019/08/find-insights-with-ranked-cross-correlations/)
 
 ## See also
 

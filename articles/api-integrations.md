@@ -464,7 +464,7 @@ print(analysis)
 ### Blog Posts & Tutorials
 
 - **All lares articles:** [Author page on
-  DataScience+](https://datascienceplus.com/author/bernardo-lares/)
+  R-bloggers](https://www.r-bloggers.com/author/bernardo-lares/)
 - **Package website:** <https://laresbernardo.github.io/lares/>
 
 ## Next Steps

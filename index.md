@@ -62,25 +62,25 @@ dev version.
 - **AutoML Quickstart:** [Introduction to AutoML using
   `lares`](https://laresbernardo.github.io/lares/articles/h2o_automl.html)
 - **Model Results Visualization:**
-  [Classification](https://datascienceplus.com/machine-learning-results-one-plot-to-rule-them-all/)
+  [Classification](https://www.r-bloggers.com/2018/07/machine-learning-results-in-r-one-plot-to-rule-them-all/)
   \|
-  [Regression](https://datascienceplus.com/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/)
+  [Regression](https://www.r-bloggers.com/2018/07/machine-learning-results-in-r-one-plot-to-rule-them-all-part-2-regression-models/)
 - **Marketing Mix Model Selection:** [Select the right MMM
   candidate](https://medium.com/@laresbernardo/select-the-right-mmm-candidate-based-on-your-specific-criteria-and-business-knowledge-1f583c3cb97a)
 - **Cross-Correlations:** [Find Insights with Ranked
-  Cross-Correlations](https://datascienceplus.com/find-insights-with-ranked-cross-correlations/)
+  Cross-Correlations](https://www.r-bloggers.com/2019/08/find-insights-with-ranked-cross-correlations/)
 - **Secure Credentials:** [Manage Secrets in
-  R](https://datascienceplus.com/how-to-manage-credentials-and-secrets-safely-in-r/)
+  R](https://www.r-bloggers.com/2020/08/how-to-manage-credentials-and-secrets-safely-in-r/)
 - **Portfolio Analysis:** [Performance &
-  Reporting](https://datascienceplus.com/visualize-your-portfolios-performance-and-generate-a-nice-report-with-r/)
+  Reporting](https://www.r-bloggers.com/2018/09/visualize-your-portfolios-performance-and-generate-a-nice-report-with-r/)
 - **Fun games**:
-  [Wordle](https://datascienceplus.com/how-i-selected-my-starting-word-for-wordle-using-simulations-and-r/),
+  [Wordle](https://www.r-bloggers.com/2022/02/how-i-selected-my-starting-word-for-wordle-using-simulations-and-r/),
   [Scrabble](https://laresbernardo.github.io/lares/reference/scrabble.html),
   [Sudoku](https://laresbernardo.github.io/lares/reference/sudoku_solver.html),
   [Mazes](https://laresbernardo.github.io/lares/reference/maze_solve.html),
   etc.
 - **More Examples:** [Read other
-  posts](https://datascienceplus.com/author/bernardo-lares/)
+  posts](https://www.r-bloggers.com/author/bernardo-lares/)
 
 ------------------------------------------------------------------------
 

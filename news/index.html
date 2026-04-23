@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.3.3.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,20 +46,26 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="5.3.3" id="lares-533-development">lares 5.3.3 (Development)<a class="anchor" aria-label="anchor" href="#lares-533-development"></a></h2>
-<ul><li>docs: created comprehensive new vignettes</li>
-<li>docs: added minimum version requirement <code>fansi (&gt;= 1.0.0)</code> in DESCRIPTION for colored output support</li>
-<li>feat: new experimental <code><a href="../reference/mp3_update_tags.html">mp3_update_tags()</a></code> function and <code>get_mp3(..., metadata = TRUE, cover = TRUE, title = NULL)</code> parameters</li>
+<h2 class="pkg-version" data-toc-text="5.4.0" id="lares-540-2026-04-23">lares 5.4.0 (2026-04-23)<a class="anchor" aria-label="anchor" href="#lares-540-2026-04-23"></a></h2><p class="text-muted">CRAN release: 2026-04-23</p>
+<ul><li>feat: migrate <code><a href="../reference/holidays.html">holidays()</a></code> function to Nager.Date API and add support for ISO country codes <a href="https://github.com/laresbernardo/lares/issues/61" class="external-link">#61</a></li>
+<li>feat: <code><a href="../reference/mp3_get.html">mp3_get()</a></code> prioritizes iTunes Search API for metadata extraction with Spotify as a fallback</li>
+<li>feat: new <code><a href="../reference/mp3_update_tags.html">mp3_update_tags()</a></code> function to update MP3 metadata tags using eyeD3</li>
+<li>fix: high-quality audio trimming (V0) and file handling in <code><a href="../reference/mp3_trim.html">mp3_trim()</a></code>
+</li>
+<li>feat: new <code><a href="../reference/cal_split.html">cal_split()</a></code> function to split dates into multiple columns (year, month, week, day, etc)</li>
 <li>feat: new parameter <code>model_name</code> in <code><a href="../reference/h2o_automl.html">h2o_automl()</a></code> and <code><a href="../reference/h2o_results.html">h2o_results()</a></code> for cleaner, more intuitive API</li>
 <li>feat: added <code>model_name</code> parameter to enable custom model naming for better file organization with <code><a href="../reference/export_results.html">export_results()</a></code>
 </li>
-<li>feat: new <code><a href="../reference/toon_reduction.html">toon_reduction()</a></code> to calculate size reduction of JSON vs TOON format. See new toon package</li>
+<li>feat: new <code><a href="../reference/toon_reduction.html">toon_reduction()</a></code> to calculate size reduction of JSON vs TOON format</li>
+<li>feat: new <code>click</code> parameter on <code><a href="../reference/dont_sleep.html">dont_sleep()</a></code> to disable mouse clicks while keeping screen awake</li>
 <li>fix: resolved scoping issue in <code><a href="../reference/h2o_results.html">h2o_results()</a></code> that caused <code>object 'model_name_input' not found</code> error</li>
 <li>fix: improved <code><a href="../reference/mplot_metrics.html">mplot_metrics()</a></code> robustness to handle missing validation metrics without crashing</li>
-<li>fix: parameter <code>dir</code> passed correctly in <code><a href="../reference/get_credentials.html">get_creds()</a></code>
-</li>
-<li>fix: high-quality audio trimming (V0) and file handling in <code><a href="../reference/mp3_trim.html">mp3_trim()</a></code>
-</li>
+<li>fix: parameter <code>dir</code> passed correctly in <code><a href="../reference/get_credentials.html">get_creds()</a></code> and allows full YAML file path</li>
+<li>docs: added minimum version requirement <code>fansi (&gt;= 1.0.0)</code> in DESCRIPTION for colored output support</li>
+<li>docs: created comprehensive new vignettes for API integrations, Data Wrangling, Games, Machine Learning, and Robyn</li>
+<li>docs: fixed some links avoiding crawlers in README.md and documentation</li>
+<li>recode: split <code>other_functions.R</code> into <code>utils_data.R</code>, <code>utils_system.R</code>, and <code>utils_text.R</code> for better maintainability</li>
+<li>recode: renamed <code>get_mp3()</code> and <code>trim_mp3()</code> to <code><a href="../reference/mp3_get.html">mp3_get()</a></code> and <code><a href="../reference/mp3_trim.html">mp3_trim()</a></code> for consistency</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="5.3.2" id="lares-532-2025-08-18">lares 5.3.2 (2025-08-18)<a class="anchor" aria-label="anchor" href="#lares-532-2025-08-18"></a></h2><p class="text-muted">CRAN release: 2025-08-18</p>

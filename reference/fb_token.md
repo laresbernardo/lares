@@ -35,7 +35,7 @@ attribute called "expiration" with date and time of expiration.
 ## Details
 
 More info: [Long-Lived Access
-Tokens](https://developers.facebook.com/docs/facebook-login/guides/access-tokens/get-long-lived)
+Tokens](https://developers.facebook.com/documentation/facebook-login/guides/access-tokens/get-long-lived/)
 
 ## See also
 

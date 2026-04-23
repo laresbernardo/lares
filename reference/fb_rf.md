@@ -3,7 +3,7 @@
 Create or query reach and frequency predictions using Facebook's Reach
 and Frequency API. For more information on the API and its parameters,
 go to the [original
-documentaion](https://developers.facebook.com/docs/marketing-api/insights).
+documentaion](https://developers.facebook.com/documentation/ads-commerce/marketing-api/insights/).
 
 ## Usage
 

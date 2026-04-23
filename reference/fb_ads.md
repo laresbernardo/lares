@@ -2,7 +2,7 @@
 
 This returns all available FB ads for any account, campaign, or ad set
 id. For more information on Ad' API, go to the [original
-documentaion](https://developers.facebook.com/docs/marketing-api/reference/adgroup)
+documentaion](https://developers.facebook.com/documentation/ads-commerce/marketing-api/reference/adgroup/)
 
 ## Usage
 

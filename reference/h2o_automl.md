@@ -221,10 +221,10 @@ metrics, parameters, importance data.frame, seed, and plots when
 For additional tutorials and examples:
 
 - [Machine Learning with H2O
-  Package](https://datascienceplus.com/machine-learning-with-r-h2o-package/)
+  Package](https://laresbernardo.github.io/lares/articles/machine-learning.html)
 
 - [Understanding ROC
-  Curves](https://datascienceplus.com/understanding-roc-curves-with-lares/)
+  Curves](https://laresbernardo.github.io/lares/reference/mplot_roc.html)
 
 ## List of algorithms
 

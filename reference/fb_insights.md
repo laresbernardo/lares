@@ -3,7 +3,7 @@
 This returns all available FB insights per day including any given
 breakdown to the specified report level, and place into a data frame.
 For more information on Ad Insights' API, go to the original
-[documentaion](https://developers.facebook.com/docs/marketing-api/insights/).
+[documentaion](https://developers.facebook.com/documentation/ads-commerce/marketing-api/insights/).
 
 ## Usage
 
@@ -75,7 +75,7 @@ fb_insights(
 
   List. Each filter will be a list containing "field", "operator", and
   "value". Read more about the operators in the official
-  [docs](https://developers.facebook.com/docs/marketing-api/insights).
+  [docs](https://developers.facebook.com/documentation/ads-commerce/marketing-api/insights).
   Example:
   `dplyr::tibble(field = "country", operator = "IN", value = list("PE")))`.
 

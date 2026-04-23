@@ -1,14 +1,26 @@
 # Changelog
 
-## lares 5.3.3 (Development)
+## lares 5.4.0 (2026-04-23)
 
-- docs: created comprehensive new vignettes
-- docs: added minimum version requirement `fansi (>= 1.0.0)` in
-  DESCRIPTION for colored output support
-- feat: new experimental
+CRAN release: 2026-04-23
+
+- feat: migrate
+  [`holidays()`](https://laresbernardo.github.io/lares/reference/holidays.md)
+  function to Nager.Date API and add support for ISO country codes
+  [\#61](https://github.com/laresbernardo/lares/issues/61)
+- feat:
+  [`mp3_get()`](https://laresbernardo.github.io/lares/reference/mp3_get.md)
+  prioritizes iTunes Search API for metadata extraction with Spotify as
+  a fallback
+- feat: new
   [`mp3_update_tags()`](https://laresbernardo.github.io/lares/reference/mp3_update_tags.md)
-  function and
-  `get_mp3(..., metadata = TRUE, cover = TRUE, title = NULL)` parameters
+  function to update MP3 metadata tags using eyeD3
+- fix: high-quality audio trimming (V0) and file handling in
+  [`mp3_trim()`](https://laresbernardo.github.io/lares/reference/mp3_trim.md)
+- feat: new
+  [`cal_split()`](https://laresbernardo.github.io/lares/reference/cal_split.md)
+  function to split dates into multiple columns (year, month, week, day,
+  etc)
 - feat: new parameter `model_name` in
   [`h2o_automl()`](https://laresbernardo.github.io/lares/reference/h2o_automl.md)
   and
@@ -19,8 +31,10 @@
   [`export_results()`](https://laresbernardo.github.io/lares/reference/export_results.md)
 - feat: new
   [`toon_reduction()`](https://laresbernardo.github.io/lares/reference/toon_reduction.md)
-  to calculate size reduction of JSON vs TOON format. See new toon
-  package
+  to calculate size reduction of JSON vs TOON format
+- feat: new `click` parameter on
+  [`dont_sleep()`](https://laresbernardo.github.io/lares/reference/dont_sleep.md)
+  to disable mouse clicks while keeping screen awake
 - fix: resolved scoping issue in
   [`h2o_results()`](https://laresbernardo.github.io/lares/reference/h2o_results.md)
   that caused `object 'model_name_input' not found` error
@@ -29,8 +43,20 @@
   robustness to handle missing validation metrics without crashing
 - fix: parameter `dir` passed correctly in
   [`get_creds()`](https://laresbernardo.github.io/lares/reference/get_credentials.md)
-- fix: high-quality audio trimming (V0) and file handling in
+  and allows full YAML file path
+- docs: added minimum version requirement `fansi (>= 1.0.0)` in
+  DESCRIPTION for colored output support
+- docs: created comprehensive new vignettes for API integrations, Data
+  Wrangling, Games, Machine Learning, and Robyn
+- docs: fixed some links avoiding crawlers in README.md and
+  documentation
+- recode: split `other_functions.R` into `utils_data.R`,
+  `utils_system.R`, and `utils_text.R` for better maintainability
+- recode: renamed `get_mp3()` and `trim_mp3()` to
+  [`mp3_get()`](https://laresbernardo.github.io/lares/reference/mp3_get.md)
+  and
   [`mp3_trim()`](https://laresbernardo.github.io/lares/reference/mp3_trim.md)
+  for consistency
 
 ## lares 5.3.2 (2025-08-18)
 

@@ -1,7 +1,7 @@
 # Facebook Creatives API
 
 For more information: [Marketing
-API](https://developers.facebook.com/docs/marketing-api)
+API](https://developers.facebook.com/documentation/ads-commerce/marketing-api/)
 
 ## Usage
 

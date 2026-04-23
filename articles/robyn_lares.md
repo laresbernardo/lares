@@ -190,7 +190,7 @@ resources:
 - [Robyn GitHub
   Repository](https://github.com/facebookexperimental/Robyn)
 - [Robyn: Analyst’s Guide to
-  MMM](https://facebookexperimental.github.io/Robyn/docs/analysts-guide-to-MMM)
+  MMM](https://facebookexperimental.github.io/Robyn/docs/analysts-guide-to-MMM/)
 - [Select the right MMM candidate based on your specific criteria and
   business
   knowledge](https://medium.com/@laresbernardo/select-the-right-mmm-candidate-based-on-your-specific-criteria-and-business-knowledge-1f583c3cb97a)
