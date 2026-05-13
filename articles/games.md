@@ -7,6 +7,7 @@ of fun game solvers and helpers! Challenge yourself with Wordle,
 Scrabble, Sudoku, mazes…
 
 ``` r
+
 library(lares)
 ```
 
@@ -17,6 +18,7 @@ Play or solve Wordle puzzles with validation, hints, and simulations.
 ### Basic Wordle Validation
 
 ``` r
+
 # Check your guess against a word
 wordle_check("OPENS", "ABBEY")
 ```
@@ -26,6 +28,7 @@ wordle_check("OPENS", "ABBEY")
 ```
 
 ``` r
+
 wordle_check("BABES", "ABBEY")
 ```
 
@@ -34,6 +37,7 @@ wordle_check("BABES", "ABBEY")
 ```
 
 ``` r
+
 wordle_check("ABBEY", "ABBEY")
 ```
 
@@ -48,6 +52,7 @@ Use
 to find possible words:
 
 ``` r
+
 # After OPENS: O is not in word, P/E/N/S are not in positions 2/3/4/5
 hints <- scrabble_words(
   tiles = "abcdefghijklmrtuvwxyz", # Available letters
@@ -64,6 +69,7 @@ hints <- scrabble_words(
 ```
 
 ``` r
+
 head(hints, 10)
 ```
 
@@ -88,6 +94,7 @@ head(hints, 10)
 Simulate solving a Wordle puzzle:
 
 ``` r
+
 # Simulate solving with different starting words
 simulation <- wordle_simulation(
   input = "SAINT",
@@ -121,6 +128,7 @@ simulation <- wordle_simulation(
 ```
 
 ``` r
+
 print(simulation)
 #> Seed Word: SAINT
 #> Objective Word: ABBEY
@@ -134,6 +142,7 @@ print(simulation)
 Access word lists for different languages:
 
 ``` r
+
 # Get English 5-letter words
 en_words <- wordle_dictionary("en")
 head(en_words, 20)
@@ -149,6 +158,7 @@ Maximize your Scrabble score with word finders and calculators!
 ### Find Highest-Scoring Words
 
 ``` r
+
 # Find best words from your tiles
 scrabble_words(
   tiles = "aeiourtn",
@@ -183,6 +193,7 @@ scrabble_words(
 ### With Board Constraints
 
 ``` r
+
 # Must contain specific letters
 scrabble_words(
   tiles = "bernardo",
@@ -212,6 +223,7 @@ scrabble_words(
 ### Calculate Word Scores
 
 ``` r
+
 # Get point values for each letter
 en_scores <- scrabble_points("en")
 print(en_scores)
@@ -255,6 +267,7 @@ scrabble_score(words, en_scores)
 ### Multi-Language Support
 
 ``` r
+
 # Spanish Scrabble
 scrabble_words(
   tiles = "españa",
@@ -277,6 +290,7 @@ Solve Sudoku puzzles automatically!
 ### Simple Sudoku
 
 ``` r
+
 # Easy puzzle (0 represents empty cells)
 trivial <- matrix(c(
   0, 9, 0, 7, 0, 0, 8, 6, 0,
@@ -308,6 +322,7 @@ print(solution)
 ### Complex Sudoku
 
 ``` r
+
 # Harder puzzle
 difficult <- matrix(c(
   5, 3, 0, 0, 7, 0, 0, 0, 0,
@@ -331,6 +346,7 @@ Solve mazes using depth-first search algorithms!
 ### Basic Maze
 
 ``` r
+
 # Create a simple maze (0 = path, 1 = wall)
 simple_maze <- matrix(c(
   0, 1, 0, 0, 0,
@@ -371,6 +387,7 @@ print(solution)
 ### Micromouse Competition Maze
 
 ``` r
+
 # Classic Micromouse-style maze
 micromouse <- matrix(c(
   1, 1, 1, 1, 1, 1, 1, 1,
@@ -394,6 +411,7 @@ maze_solve(
 ### Advanced Options
 
 ``` r
+
 # With diagonal movement and aiming toward goal
 maze_solve(
   micromouse,
@@ -413,6 +431,7 @@ Use game functions for:
 **Text Analysis:**
 
 ``` r
+
 # Find anagrams in your dataset
 words <- c("listen", "silent", "hello")
 scrabble_words(tiles = "listen", language = "en")
@@ -421,6 +440,7 @@ scrabble_words(tiles = "listen", language = "en")
 **Algorithm Teaching:**
 
 ``` r
+
 # Demonstrate recursion with maze solving
 maze_solve(simple_maze, start = c(1, 1), end = c(5, 5))
 ```
@@ -428,6 +448,7 @@ maze_solve(simple_maze, start = c(1, 1), end = c(5, 5))
 **Pattern Recognition:**
 
 ``` r
+
 # Wordle simulations for optimal starting words
 seeds <- 1:100
 results <- lapply(seeds, function(s) {

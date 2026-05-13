@@ -6,6 +6,7 @@ Install `lares` from CRAN or get the development version from GitHub.
 Then, load the package:
 
 ``` r
+
 library(lares)
 ```
 
@@ -14,6 +15,7 @@ library(lares)
 We’ll use the Titanic dataset included in `lares`:
 
 ``` r
+
 data(dft)
 head(dft, 3)
 #>   PassengerId Survived Pclass    Sex Age SibSp Parch           Ticket    Fare
@@ -36,6 +38,7 @@ function provides quick frequency tables with percentages and cumulative
 values:
 
 ``` r
+
 # How many survived?
 freqs(dft, Survived)
 #> # A tibble: 2 × 5
@@ -48,6 +51,7 @@ freqs(dft, Survived)
 ### Multi-variable Frequencies
 
 ``` r
+
 # Survival by passenger class
 freqs(dft, Pclass, Survived)
 #> # A tibble: 6 × 6
@@ -64,6 +68,7 @@ freqs(dft, Pclass, Survived)
 ### Visual Frequencies
 
 ``` r
+
 # Visualize survival by class
 freqs(dft, Pclass, Survived, plot = TRUE)
 ```
@@ -75,6 +80,7 @@ freqs(dft, Pclass, Survived, plot = TRUE)
 Analyze all variables at once:
 
 ``` r
+
 freqs_df(dft, plot = TRUE, top = 10)
 ```
 
@@ -88,6 +94,7 @@ Get correlations between all variables (automatically handles
 categorical variables):
 
 ``` r
+
 # Correlation matrix of numeric variables
 cors <- corr(dft[, 2:5], method = "pearson")
 head(cors, 3)
@@ -100,6 +107,7 @@ head(cors, 3)
 ### Correlate One Variable with All Others
 
 ``` r
+
 # Which variables correlate most with Survival?
 corr_var(dft, Survived, top = 10)
 ```
@@ -111,6 +119,7 @@ corr_var(dft, Survived, top = 10)
 Find the strongest correlations across the entire dataset:
 
 ``` r
+
 # Top cross-correlations
 corr_cross(dft[, 2:6], top = 8)
 ```
@@ -124,6 +133,7 @@ corr_cross(dft[, 2:6], top = 8)
 Reduce categories in high-cardinality variables:
 
 ``` r
+
 # Reduce ticket categories (keep top 5, group rest as "other")
 dft_reduced <- categ_reducer(dft, Ticket, top = 5)
 freqs(dft_reduced, Ticket, top = 10)
@@ -143,6 +153,7 @@ freqs(dft_reduced, Ticket, top = 10)
 Normalize numeric variables to \[0, 1\] range:
 
 ``` r
+
 # Normalize age
 dft$Age_norm <- normalize(dft$Age)
 head(dft[, c("Age", "Age_norm")], 5)
@@ -159,6 +170,7 @@ head(dft[, c("Age", "Age_norm")], 5)
 Convert categorical variables to binary columns:
 
 ``` r
+
 # One-hot encode passenger class
 dft_encoded <- ohse(dft[, c("Pclass", "Survived")], limit = 5)
 colnames(dft_encoded)
@@ -170,6 +182,7 @@ colnames(dft_encoded)
 Create date features for time series analysis:
 
 ``` r
+
 # Create sample dates
 dates <- seq(as.Date("2024-01-01"), as.Date("2024-12-31"), by = "day")
 
@@ -196,6 +209,7 @@ quarters
 `lares` includes a clean, professional theme:
 
 ``` r
+
 library(ggplot2)
 
 ggplot(dft, aes(x = Age, y = Fare * 1000, color = Survived)) +
@@ -214,6 +228,7 @@ ggplot(dft, aes(x = Age, y = Fare * 1000, color = Survived)) +
 Visualize distributions quickly:
 
 ``` r
+
 # Analyze Fare distribution
 distr(dft, Fare, breaks = 20)
 ```
@@ -225,6 +240,7 @@ distr(dft, Fare, breaks = 20)
 Format numbers for better readability:
 
 ``` r
+
 # Format large numbers
 formatNum(c(1234567, 987654.321), decimals = 2)
 #> [1] "1,234,567" "987,654.3"
@@ -243,6 +259,7 @@ num_abbr(c("1.5K", "2.5M", "1.5B"), numeric = TRUE)
 Use lares scales for better axis formatting:
 
 ``` r
+
 df_summary <- dft %>%
   group_by(Pclass) %>%
   summarize(avg_fare = mean(Fare, na.rm = TRUE), .groups = "drop")
@@ -263,6 +280,7 @@ ggplot(df_summary, aes(x = factor(Pclass), y = avg_fare)) +
 Convert vectors to readable text:
 
 ``` r
+
 # Simple comma-separated
 vector2text(c("apple", "banana", "cherry"))
 #> [1] "'apple', 'banana', 'cherry'"
@@ -281,6 +299,7 @@ v2t(LETTERS[1:5])
 Here’s a complete analysis workflow:
 
 ``` r
+
 library(dplyr)
 
 # 1. Load and prepare data
@@ -300,6 +319,7 @@ freqs(dft_clean, Age_Group, Survived, plot = TRUE)
 ![](data-wrangling_files/figure-html/unnamed-chunk-19-1.png)
 
 ``` r
+
 
 # 4. Check correlations
 corr_var(dft_clean, Survived_TRUE, top = 8, max_pvalue = 0.05)

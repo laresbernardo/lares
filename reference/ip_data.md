@@ -91,13 +91,13 @@ ip_data("163.114.132.0")
 #> 1           en-US, es-US, haw, fr Dollar (USD)
 ip_data(ip = c(myip(), "201.244.197.199"), quiet = TRUE)
 #>                id addresstype                                asn
-#> 1   20.119.78.149        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK
+#> 1   20.109.36.227        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK
 #> 2 201.244.197.199        IPv4                    19429 - AS19429
 #>                     isp connection       country stateregion districtcounty
-#> 1 Microsoft Corporation    Hosting United States    Virginia   Rappahannock
+#> 1 Microsoft Corporation    Hosting United States    Virginia        Loudoun
 #> 2        ETB - Colombia       <NA>      Colombia Bogota D.C.   Bogotá  D.C.
 #>              city zippostalcode            weatherstation       coordinates
-#> 1      Washington         22747     USVA0810 - Washington 38.7134, -78.1591
+#> 1         Ashburn         20149        USVA0027 - Ashburn 39.0438, -77.4874
 #> 2 Barrio San Luis          <NA> COXX7742 - Vereda El Hato 4.66779, -74.0215
 #>                   timezone localtime             languages     currency
 #> 1 America/New_York (UTC-4)           en-US, es-US, haw, fr Dollar (USD)

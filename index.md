@@ -41,6 +41,7 @@ variety of functions grouped in families for:
 ## Installation
 
 ``` r
+
 # CRAN VERSION
 install.packages("lares")
 

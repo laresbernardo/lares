@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/laresbernardo/lares/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/laresbernardo/lares/blob/v5.4.0/DESCRIPTION)
 
 Lares B (2026). *lares: Lean Analytics and Robust Exploration Sidekick*.
 R package version 5.4.0, <https://github.com/laresbernardo/lares>.

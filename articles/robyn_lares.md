@@ -18,6 +18,7 @@ particularly useful when you have many media channels and want to set
 reasonable default ranges.
 
 ``` r
+
 # Define your input variables
 paid_media_spends <- c("tv_spend", "digital_spend")
 organic_vars <- c("newsletter")
@@ -84,6 +85,7 @@ into this topic, check out this [Medium
 post](https://medium.com/@laresbernardo/select-the-right-mmm-candidate-based-on-your-specific-criteria-and-business-knowledge-1f583c3cb97a).
 
 ``` r
+
 # Assuming you have a Robyn OutputCollect object
 # OutputCollect <- robyn_run(...)
 
@@ -113,6 +115,7 @@ calculates detailed performance metrics for a specific model or a set of
 models. It breaks down contribution, ROAS or CPA for each channel, etc.
 
 ``` r
+
 # Get performance for a specific model and date range
 performance <- robyn_performance(
     InputCollect = InputCollect,
@@ -140,6 +143,7 @@ allows you to explore the marginal returns of your media channels (mROAS
 or mCPA).
 
 ``` r
+
 # Calculate marginal response
 marginal <- robyn_marginal(
     InputCollect = InputCollect,
@@ -160,6 +164,7 @@ and
 help you allocate budget across all of them simultaneously.
 
 ``` r
+
 # Load multiple models
 model_paths <- c("model_us.json", "model_uk.json", "model_de.json")
 models <- lapply(model_paths, Robyn::robyn_recreate)

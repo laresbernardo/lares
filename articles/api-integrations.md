@@ -12,6 +12,7 @@ integrate AI services, financial data, and more into your R workflows.
 `lares` uses a YAML configuration file to store credentials:
 
 ``` r
+
 library(lares)
 ```
 
@@ -35,6 +36,7 @@ default:
 Set the credentials directory (one-time setup):
 
 ``` r
+
 # lares will prompt you to set the directory
 creds <- get_credentials("openai")
 
@@ -47,6 +49,7 @@ creds <- get_credentials("openai", dir = "~/my_credentials")
 ### Basic Usage
 
 ``` r
+
 # Simple question
 response <- gpt_ask("Explain linear regression in 2 sentences")
 ```
@@ -58,6 +61,7 @@ Use
 to build better prompts:
 
 ``` r
+
 # Create a structured prompt
 prompt <- gpt_prompter(
   instruction = "Classify these items",
@@ -76,6 +80,7 @@ result <- gpt_ask(prompt$prompt)
 #### Classification
 
 ``` r
+
 # Classify text into categories
 items <- c("Python tutorial", "R package", "Java course", "Statistics book")
 categories <- c("Programming", "Statistics", "Other")
@@ -87,6 +92,7 @@ print(result)
 #### Data Extraction
 
 ``` r
+
 # Extract specific information
 texts <- c(
   "My email is john@example.com",
@@ -103,6 +109,7 @@ print(result)
 #### Translation
 
 ``` r
+
 # Translate text
 text <- rep("Hello, how are you?", 3)
 languages <- c("Spanish", "French", "German")
@@ -114,6 +121,7 @@ print(result)
 #### Formatting
 
 ``` r
+
 # Standardize date formats
 dates <- c("March 15, 2024", "15/03/2024", "2024-03-15")
 format_spec <- "ISO 8601 (YYYY-MM-DD)"
@@ -125,6 +133,7 @@ print(result)
 #### Tagging
 
 ``` r
+
 # Tag items with multiple labels
 items <- c("Machine learning tutorial", "Data visualization guide")
 tags <- c("AI", "Statistics", "Programming", "Visualization")
@@ -136,6 +145,7 @@ print(result)
 ### View Conversation History
 
 ``` r
+
 # See all previous prompts and responses from this session
 history <- gpt_history()
 head(history)
@@ -144,6 +154,7 @@ head(history)
 ### Advanced Configuration
 
 ``` r
+
 # Customize model and parameters
 response <- gpt_ask(
   "Write a haiku about data science",
@@ -158,6 +169,7 @@ response <- gpt_ask(
 ### Basic Usage
 
 ``` r
+
 # Text generation
 response <- gemini_ask(
   "Explain the Central Limit Theorem",
@@ -168,6 +180,7 @@ response <- gemini_ask(
 ### Image Analysis
 
 ``` r
+
 # Analyze an image
 response <- gemini_image(
   prompt = "Describe this plot in detail",
@@ -181,6 +194,7 @@ response <- gemini_image(
 ### Get Stock Historical Data
 
 ``` r
+
 # Fetch Apple stock data
 aapl <- stocks_hist(
   symbols = "AAPL",
@@ -194,6 +208,7 @@ head(aapl, 3)
 ### Multiple Stocks
 
 ``` r
+
 # Compare multiple stocks
 tech_stocks <- stocks_hist(
   symbols = c("AAPL", "GOOGL", "MSFT"),
@@ -206,6 +221,7 @@ head(tech_stocks, 3)
 ### Stock Quotes
 
 ``` r
+
 # Real-time quotes
 quote <- stocks_quote("AAPL")
 print(quote)
@@ -214,6 +230,7 @@ print(quote)
 ### Portfolio Analysis
 
 ``` r
+
 # Track a portfolio
 portfolio <- daily_portfolio(
   symbols = c("AAPL", "GOOGL", "TSLA"),
@@ -228,6 +245,7 @@ splot_summary(portfolio)
 ### Stock Visualizations
 
 ``` r
+
 # Growth over time
 splot_growth(tech_stocks, symbols = c("AAPL", "GOOGL"))
 
@@ -243,6 +261,7 @@ splot_types(tech_stocks)
 ### Read from Google Sheets
 
 ``` r
+
 # Read a Google Sheet
 data <- readGS(
   title = "My Spreadsheet",
@@ -254,6 +273,7 @@ data <- readGS(
 ### Write to Google Sheets
 
 ``` r
+
 # Write data to Google Sheets
 writeGS(
   data = mtcars,
@@ -268,6 +288,7 @@ writeGS(
 ### PostgreSQL
 
 ``` r
+
 # Query a database
 query <- "SELECT * FROM users WHERE active = TRUE LIMIT 10"
 result <- queryDB(
@@ -281,6 +302,7 @@ result <- queryDB(
 ### Search Trends Over Time
 
 ``` r
+
 # Get trend data
 trends <- gtrends_time(
   keyword = "machine learning",
@@ -294,6 +316,7 @@ head(trends)
 ### Related Queries
 
 ``` r
+
 # Find related search terms
 related <- gtrends_related(
   keyword = "data science",
@@ -306,6 +329,7 @@ related <- gtrends_related(
 ### 1. Secure Your Credentials
 
 ``` r
+
 # ❌ DON'T hardcode
 # api_key <- "sk-1234567890"
 
@@ -316,6 +340,7 @@ api_key <- get_credentials("openai")$secret_key
 ### 2. Handle API Errors
 
 ``` r
+
 # Wrap in try-catch
 result <- tryCatch(
   {
@@ -331,6 +356,7 @@ result <- tryCatch(
 ### 3. Rate Limiting
 
 ``` r
+
 # Add delays for bulk operations
 items <- c("item1", "item2", "item3")
 
@@ -344,6 +370,7 @@ results <- lapply(items, function(item) {
 ### 4. Cache Results
 
 ``` r
+
 # Cache expensive API calls
 result <- cache_pipe(
   {
@@ -357,6 +384,7 @@ result <- cache_pipe(
 ### 5. Monitor Costs
 
 ``` r
+
 # Use cheaper models for simple tasks
 simple_task <- gpt_ask(
   "Summarize: The meeting is at 3pm",
@@ -375,6 +403,7 @@ complex_task <- gpt_ask(
 Set global defaults via environment variables:
 
 ``` r
+
 # In .Renviron file:
 # LARES_GPT_MODEL=gpt-4
 # LARES_GPT_URL=https://api.openai.com/v1/chat/completions
@@ -393,6 +422,7 @@ Sys.getenv(c("LARES_GPT_MODEL", "LARES_GEMINI_API"))
 ### API Key Issues
 
 ``` r
+
 # Verify credentials are loaded
 creds <- get_credentials("openai")
 if (is.null(creds$secret_key)) {
@@ -403,6 +433,7 @@ if (is.null(creds$secret_key)) {
 ### Network Issues
 
 ``` r
+
 # Check internet connection
 if (haveInternet()) {
   message("Connected to internet")
@@ -420,6 +451,7 @@ Use batch processing 3. Upgrade your API plan
 ## Complete Example: Data Analysis with AI
 
 ``` r
+
 # 1. Load data
 data(dft)
 
