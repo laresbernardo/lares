@@ -91,17 +91,17 @@ ip_data("163.114.132.0")
 #> 1           en-US, es-US, haw, fr Dollar (USD)
 ip_data(ip = c(myip(), "201.244.197.199"), quiet = TRUE)
 #>                id addresstype                                asn
-#> 1   20.109.36.227        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK
+#> 1    52.234.5.248        IPv4 8075 - MICROSOFT-CORP-MSN-AS-BLOCK
 #> 2 201.244.197.199        IPv4                    19429 - AS19429
 #>                     isp connection       country stateregion districtcounty
-#> 1 Microsoft Corporation    Hosting United States    Virginia        Loudoun
+#> 1 Microsoft Corporation    Hosting United States  California    Santa Clara
 #> 2        ETB - Colombia       <NA>      Colombia Bogota D.C.   Bogotá  D.C.
 #>              city zippostalcode            weatherstation       coordinates
-#> 1         Ashburn         20149        USVA0027 - Ashburn 39.0438, -77.4874
+#> 1        San Jose         95141       USCA0993 - San Jose 37.3387, -121.885
 #> 2 Barrio San Luis          <NA> COXX7742 - Vereda El Hato 4.66779, -74.0215
-#>                   timezone localtime             languages     currency
-#> 1 America/New_York (UTC-4)           en-US, es-US, haw, fr Dollar (USD)
-#> 2   America/Bogota (UTC-5)                           es-CO   Peso (COP)
+#>                      timezone localtime             languages     currency
+#> 1 America/Los_Angeles (UTC-7)           en-US, es-US, haw, fr Dollar (USD)
+#> 2      America/Bogota (UTC-5)                           es-CO   Peso (COP)
 #>                                     hostname
 #> 1                                       <NA>
 #> 2 dynamic-201-244-197-199.dynamic.etb.net.co

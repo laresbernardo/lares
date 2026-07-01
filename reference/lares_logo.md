@@ -47,6 +47,6 @@ lares_logo()
 #>                               %
 #>                             /   %
 #> 
-#> lares: dev-5.4.0 
-#> R version 4.6.0 (2026-04-24)
+#> lares: dev-5.4.0.9000 
+#> R version 4.6.1 (2026-06-24)
 ```
