@@ -56,10 +56,12 @@ ci_upper <- function(mean, ssd, n, conf = 0.95) {
 #' ci_var(dft, Fare, Pclass, conf = 0.99)
 #' @export
 ci_var <- function(df, var, group_var = NULL, conf = 0.95) {
-  if (isTRUE(try(is.character(var), silent = TRUE))) {
-    var <- eval(substitute(var), df)
+  var_env <- parent.frame()
+  var_eval <- try(eval(substitute(var), var_env), silent = TRUE)
+  if (!inherits(var_eval, "try-error") && is.character(var_eval) && length(var_eval) == 1) {
+    var <- sym(var_eval)
   } else {
-    var <- as_label(enquo(var))
+    var <- enquo(var)
   }
   group_var <- enquo(group_var)
 
