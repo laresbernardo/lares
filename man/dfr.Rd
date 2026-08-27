@@ -28,7 +28,7 @@ data(dfr)
 lapply(dfr, head)
 }
 \seealso{
-Other Dataset: 
+Other Dataset:
 \code{\link{dft}}
 }
 \concept{Dataset}

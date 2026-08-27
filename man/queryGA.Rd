@@ -43,35 +43,35 @@ More about the documentation and parameters in
 \code{googleAnalyticsR::google_analytics()} or Google Analytics' API.
 }
 \seealso{
-Other Credentials: 
-\code{\link{db_download}()},
-\code{\link{db_upload}()},
-\code{\link{encrypt_file}()},
-\code{\link{get_credentials}()},
-\code{\link{get_tweets}()},
-\code{\link{mail_send}()},
-\code{\link{queryDB}()},
-\code{\link{slackSend}()},
-\code{\link{stocks_file}()}
+Other Credentials:
+\code{\link[=db_download]{db_download()}},
+\code{\link[=db_upload]{db_upload()}},
+\code{\link[=encrypt_file]{encrypt_file()}},
+\code{\link[=get_credentials]{get_credentials()}},
+\code{\link[=get_tweets]{get_tweets()}},
+\code{\link[=mail_send]{mail_send()}},
+\code{\link[=queryDB]{queryDB()}},
+\code{\link[=slackSend]{slackSend()}},
+\code{\link[=stocks_file]{stocks_file()}}
 
-Other Google: 
-\code{\link{filesGD}()},
-\code{\link{gtrends_related}()},
-\code{\link{readGS}()}
+Other Google:
+\code{\link[=filesGD]{filesGD()}},
+\code{\link[=gtrends_related]{gtrends_related()}},
+\code{\link[=readGS]{readGS()}}
 
-Other API: 
-\code{\link{bring_api}()},
-\code{\link{fb_accounts}()},
-\code{\link{fb_ads}()},
-\code{\link{fb_creatives}()},
-\code{\link{fb_insights}()},
-\code{\link{fb_process}()},
-\code{\link{fb_report_check}()},
-\code{\link{fb_rf}()},
-\code{\link{fb_token}()},
-\code{\link{gemini_ask}()},
-\code{\link{gpt_ask}()},
-\code{\link{slackSend}()}
+Other API:
+\code{\link[=bring_api]{bring_api()}},
+\code{\link[=fb_accounts]{fb_accounts()}},
+\code{\link[=fb_ads]{fb_ads()}},
+\code{\link[=fb_creatives]{fb_creatives()}},
+\code{\link[=fb_insights]{fb_insights()}},
+\code{\link[=fb_process]{fb_process()}},
+\code{\link[=fb_report_check]{fb_report_check()}},
+\code{\link[=fb_rf]{fb_rf()}},
+\code{\link[=fb_token]{fb_token()}},
+\code{\link[=gemini_ask]{gemini_ask()}},
+\code{\link[=gpt_ask]{gpt_ask()}},
+\code{\link[=slackSend]{slackSend()}}
 }
 \concept{API}
 \concept{Credentials}

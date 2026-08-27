@@ -70,18 +70,18 @@ mplot_roc(dfr$class3$tag, dfr$class3$score,
 )
 }
 \seealso{
-Other ML Visualization: 
-\code{\link{mplot_conf}()},
-\code{\link{mplot_cuts}()},
-\code{\link{mplot_cuts_error}()},
-\code{\link{mplot_density}()},
-\code{\link{mplot_full}()},
-\code{\link{mplot_gain}()},
-\code{\link{mplot_importance}()},
-\code{\link{mplot_lineal}()},
-\code{\link{mplot_metrics}()},
-\code{\link{mplot_response}()},
-\code{\link{mplot_splits}()},
-\code{\link{mplot_topcats}()}
+Other ML Visualization:
+\code{\link[=mplot_conf]{mplot_conf()}},
+\code{\link[=mplot_cuts]{mplot_cuts()}},
+\code{\link[=mplot_cuts_error]{mplot_cuts_error()}},
+\code{\link[=mplot_density]{mplot_density()}},
+\code{\link[=mplot_full]{mplot_full()}},
+\code{\link[=mplot_gain]{mplot_gain()}},
+\code{\link[=mplot_importance]{mplot_importance()}},
+\code{\link[=mplot_lineal]{mplot_lineal()}},
+\code{\link[=mplot_metrics]{mplot_metrics()}},
+\code{\link[=mplot_response]{mplot_response()}},
+\code{\link[=mplot_splits]{mplot_splits()}},
+\code{\link[=mplot_topcats]{mplot_topcats()}}
 }
 \concept{ML Visualization}

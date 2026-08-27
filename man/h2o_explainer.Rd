@@ -62,9 +62,9 @@ xai2shiny(explainer, run = TRUE)
 }
 }
 \seealso{
-Other Interpretability: 
-\code{\link{dalex_local}()},
-\code{\link{dalex_residuals}()},
-\code{\link{dalex_variable}()}
+Other Interpretability:
+\code{\link[=dalex_local]{dalex_local()}},
+\code{\link[=dalex_residuals]{dalex_residuals()}},
+\code{\link[=dalex_variable]{dalex_variable()}}
 }
 \concept{Interpretability}

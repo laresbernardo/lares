@@ -35,9 +35,9 @@ attr(p, "z_values")
 head(attr(p, "z_labels"))
 }
 \seealso{
-Other Outliers: 
-\code{\link{outlier_tukey}()},
-\code{\link{outlier_zscore}()},
-\code{\link{winsorize}()}
+Other Outliers:
+\code{\link[=outlier_tukey]{outlier_tukey()}},
+\code{\link[=outlier_zscore]{outlier_zscore()}},
+\code{\link[=winsorize]{winsorize()}}
 }
 \concept{Outliers}

@@ -75,7 +75,7 @@ given by the great power to capture very complex patters of
 temporal correlation (Cochrane, 1997: 25)
 }
 \seealso{
-Other Forecast: 
-\code{\link{prophesize}()}
+Other Forecast:
+\code{\link[=prophesize]{prophesize()}}
 }
 \concept{Forecast}

@@ -60,34 +60,34 @@ plot(m$plot)
 }
 }
 \seealso{
-Other Machine Learning: 
-\code{\link{ROC}()},
-\code{\link{conf_mat}()},
-\code{\link{export_results}()},
-\code{\link{gain_lift}()},
-\code{\link{h2o_automl}()},
-\code{\link{h2o_predict_MOJO}()},
-\code{\link{h2o_selectmodel}()},
-\code{\link{impute}()},
-\code{\link{iter_seeds}()},
-\code{\link{model_metrics}()},
-\code{\link{model_preprocess}()},
-\code{\link{msplit}()}
+Other Machine Learning:
+\code{\link[=ROC]{ROC()}},
+\code{\link[=conf_mat]{conf_mat()}},
+\code{\link[=export_results]{export_results()}},
+\code{\link[=gain_lift]{gain_lift()}},
+\code{\link[=h2o_automl]{h2o_automl()}},
+\code{\link[=h2o_predict_MOJO]{h2o_predict_MOJO()}},
+\code{\link[=h2o_selectmodel]{h2o_selectmodel()}},
+\code{\link[=impute]{impute()}},
+\code{\link[=iter_seeds]{iter_seeds()}},
+\code{\link[=model_metrics]{model_metrics()}},
+\code{\link[=model_preprocess]{model_preprocess()}},
+\code{\link[=msplit]{msplit()}}
 
-Other Exploratory: 
-\code{\link{corr_var}()},
-\code{\link{crosstab}()},
-\code{\link{df_str}()},
-\code{\link{distr}()},
-\code{\link{freqs}()},
-\code{\link{freqs_df}()},
-\code{\link{freqs_list}()},
-\code{\link{freqs_plot}()},
-\code{\link{missingness}()},
-\code{\link{plot_cats}()},
-\code{\link{plot_df}()},
-\code{\link{plot_nums}()},
-\code{\link{tree_var}()}
+Other Exploratory:
+\code{\link[=corr_var]{corr_var()}},
+\code{\link[=crosstab]{crosstab()}},
+\code{\link[=df_str]{df_str()}},
+\code{\link[=distr]{distr()}},
+\code{\link[=freqs]{freqs()}},
+\code{\link[=freqs_df]{freqs_df()}},
+\code{\link[=freqs_list]{freqs_list()}},
+\code{\link[=freqs_plot]{freqs_plot()}},
+\code{\link[=missingness]{missingness()}},
+\code{\link[=plot_cats]{plot_cats()}},
+\code{\link[=plot_df]{plot_df()}},
+\code{\link[=plot_nums]{plot_nums()}},
+\code{\link[=tree_var]{tree_var()}}
 }
 \concept{Exploratory}
 \concept{Machine Learning}

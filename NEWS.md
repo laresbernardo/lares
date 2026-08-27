@@ -1,3 +1,12 @@
+# lares 5.4.1 (2026-08-27)
+
+- fix: updated `ip_data()` to query IP geolocation JSON APIs (`freeipapi.com` with `db-ip.com` fallback) with timeouts and robust error handling
+- fix: updated `myip()` to handle network timeouts and failures gracefully
+- fix: robust argument evaluation for NSE functions in loops (`ci_var()`, `corr_var()`, `balance_data()`)
+- fix: improved Google Sheets and Google Drive functions (`readGS()`, `writeGS()`, `filesGD()`) token caching and authentication handling
+- fix: formatted roxygen `@importFrom` tags with hanging indents for roxygen2 (>= 8.0.0) compatibility
+- docs: updated examples for external network functions (`ip_data`, `myip`, `etf_sector`) to `\dontrun{}`
+
 # lares 5.4.0 (2026-04-23)
 
 - feat: migrate `holidays()` function to Nager.Date API and add support for ISO country codes #61

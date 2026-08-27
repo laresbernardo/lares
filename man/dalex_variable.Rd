@@ -36,9 +36,9 @@ dalex_variable(explainer, vars = c("Pclass", "Sex"))
 }
 }
 \seealso{
-Other Interpretability: 
-\code{\link{dalex_local}()},
-\code{\link{dalex_residuals}()},
-\code{\link{h2o_explainer}()}
+Other Interpretability:
+\code{\link[=dalex_local]{dalex_local()}},
+\code{\link[=dalex_residuals]{dalex_residuals()}},
+\code{\link[=h2o_explainer]{h2o_explainer()}}
 }
 \concept{Interpretability}

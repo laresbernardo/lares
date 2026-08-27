@@ -93,32 +93,32 @@ met3 <- model_metrics(dfr$regr$tag, dfr$regr$score,
 print(met3)
 }
 \seealso{
-Other Machine Learning: 
-\code{\link{ROC}()},
-\code{\link{conf_mat}()},
-\code{\link{export_results}()},
-\code{\link{gain_lift}()},
-\code{\link{h2o_automl}()},
-\code{\link{h2o_predict_MOJO}()},
-\code{\link{h2o_selectmodel}()},
-\code{\link{impute}()},
-\code{\link{iter_seeds}()},
-\code{\link{lasso_vars}()},
-\code{\link{model_preprocess}()},
-\code{\link{msplit}()}
+Other Machine Learning:
+\code{\link[=ROC]{ROC()}},
+\code{\link[=conf_mat]{conf_mat()}},
+\code{\link[=export_results]{export_results()}},
+\code{\link[=gain_lift]{gain_lift()}},
+\code{\link[=h2o_automl]{h2o_automl()}},
+\code{\link[=h2o_predict_MOJO]{h2o_predict_MOJO()}},
+\code{\link[=h2o_selectmodel]{h2o_selectmodel()}},
+\code{\link[=impute]{impute()}},
+\code{\link[=iter_seeds]{iter_seeds()}},
+\code{\link[=lasso_vars]{lasso_vars()}},
+\code{\link[=model_preprocess]{model_preprocess()}},
+\code{\link[=msplit]{msplit()}}
 
-Other Model metrics: 
-\code{\link{ROC}()},
-\code{\link{conf_mat}()},
-\code{\link{errors}()},
-\code{\link{gain_lift}()},
-\code{\link{loglossBinary}()}
+Other Model metrics:
+\code{\link[=ROC]{ROC()}},
+\code{\link[=conf_mat]{conf_mat()}},
+\code{\link[=errors]{errors()}},
+\code{\link[=gain_lift]{gain_lift()}},
+\code{\link[=loglossBinary]{loglossBinary()}}
 
-Other Calculus: 
-\code{\link{corr}()},
-\code{\link{corr_cross}()},
-\code{\link{dist2d}()},
-\code{\link{quants}()}
+Other Calculus:
+\code{\link[=corr]{corr()}},
+\code{\link[=corr_cross]{corr_cross()}},
+\code{\link[=dist2d]{dist2d()}},
+\code{\link[=quants]{quants()}}
 }
 \concept{Calculus}
 \concept{Machine Learning}

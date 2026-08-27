@@ -89,9 +89,9 @@ micromouse <- matrix(c(
 maze_solve(micromouse, start = c(2, 2), end = c(7, 7))
 }
 \seealso{
-Other Games: 
-\code{\link{scrabble_dictionary}()},
-\code{\link{sudoku_solver}()},
-\code{\link{wordle_check}()}
+Other Games:
+\code{\link[=scrabble_dictionary]{scrabble_dictionary()}},
+\code{\link[=sudoku_solver]{sudoku_solver()}},
+\code{\link[=wordle_check]{wordle_check()}}
 }
 \concept{Games}

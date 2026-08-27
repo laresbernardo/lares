@@ -25,18 +25,18 @@ This functions lets the user iterate and search for best seed. Note that if
 the results change a lot, you are having a high variance in your data.
 }
 \seealso{
-Other Machine Learning: 
-\code{\link{ROC}()},
-\code{\link{conf_mat}()},
-\code{\link{export_results}()},
-\code{\link{gain_lift}()},
-\code{\link{h2o_automl}()},
-\code{\link{h2o_predict_MOJO}()},
-\code{\link{h2o_selectmodel}()},
-\code{\link{impute}()},
-\code{\link{lasso_vars}()},
-\code{\link{model_metrics}()},
-\code{\link{model_preprocess}()},
-\code{\link{msplit}()}
+Other Machine Learning:
+\code{\link[=ROC]{ROC()}},
+\code{\link[=conf_mat]{conf_mat()}},
+\code{\link[=export_results]{export_results()}},
+\code{\link[=gain_lift]{gain_lift()}},
+\code{\link[=h2o_automl]{h2o_automl()}},
+\code{\link[=h2o_predict_MOJO]{h2o_predict_MOJO()}},
+\code{\link[=h2o_selectmodel]{h2o_selectmodel()}},
+\code{\link[=impute]{impute()}},
+\code{\link[=lasso_vars]{lasso_vars()}},
+\code{\link[=model_metrics]{model_metrics()}},
+\code{\link[=model_preprocess]{model_preprocess()}},
+\code{\link[=msplit]{msplit()}}
 }
 \concept{Machine Learning}

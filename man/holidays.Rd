@@ -31,7 +31,7 @@ holidays apply.}
 This function lets the user automatically retrieve public holiday dates
 for any country supported by the Nager.Date API. Accepts country names
 (e.g., "Portugal") or ISO 3166-1 alpha-2 codes (e.g., "PT").
-Thanks to \href{https://date.nager.at}{Nager.Date}!
+Thanks to \href{https://nagerholidays.com/}{Nager.Date}!
 }
 \examples{
 \donttest{
@@ -43,47 +43,47 @@ holidays(countries = "PT") # Also accepts ISO country codes
 }
 }
 \seealso{
-Other Data Wrangling: 
-\code{\link{balance_data}()},
-\code{\link{categ_reducer}()},
-\code{\link{cleanText}()},
-\code{\link{date_cuts}()},
-\code{\link{date_feats}()},
-\code{\link{file_name}()},
-\code{\link{formatHTML}()},
-\code{\link{impute}()},
-\code{\link{left}()},
-\code{\link{normalize}()},
-\code{\link{num_abbr}()},
-\code{\link{ohe_commas}()},
-\code{\link{ohse}()},
-\code{\link{quants}()},
-\code{\link{removenacols}()},
-\code{\link{replaceall}()},
-\code{\link{replacefactor}()},
-\code{\link{textFeats}()},
-\code{\link{textTokenizer}()},
-\code{\link{vector2text}()},
-\code{\link{year_month}()},
-\code{\link{zerovar}()}
+Other Data Wrangling:
+\code{\link[=balance_data]{balance_data()}},
+\code{\link[=categ_reducer]{categ_reducer()}},
+\code{\link[=cleanText]{cleanText()}},
+\code{\link[=date_cuts]{date_cuts()}},
+\code{\link[=date_feats]{date_feats()}},
+\code{\link[=file_name]{file_name()}},
+\code{\link[=formatHTML]{formatHTML()}},
+\code{\link[=impute]{impute()}},
+\code{\link[=left]{left()}},
+\code{\link[=normalize]{normalize()}},
+\code{\link[=num_abbr]{num_abbr()}},
+\code{\link[=ohe_commas]{ohe_commas()}},
+\code{\link[=ohse]{ohse()}},
+\code{\link[=quants]{quants()}},
+\code{\link[=removenacols]{removenacols()}},
+\code{\link[=replaceall]{replaceall()}},
+\code{\link[=replacefactor]{replacefactor()}},
+\code{\link[=textFeats]{textFeats()}},
+\code{\link[=textTokenizer]{textTokenizer()}},
+\code{\link[=vector2text]{vector2text()}},
+\code{\link[=year_month]{year_month()}},
+\code{\link[=zerovar]{zerovar()}}
 
-Other Feature Engineering: 
-\code{\link{date_feats}()},
-\code{\link{ohse}()}
+Other Feature Engineering:
+\code{\link[=date_feats]{date_feats()}},
+\code{\link[=ohse]{ohse()}}
 
-Other Scrapper: 
-\code{\link{filesGD}()},
-\code{\link{gtrends_related}()},
-\code{\link{ip_data}()},
-\code{\link{mp3_get}()},
-\code{\link{readGS}()},
-\code{\link{splot_summary}()},
-\code{\link{stocks_quote}()}
+Other Scrapper:
+\code{\link[=filesGD]{filesGD()}},
+\code{\link[=gtrends_related]{gtrends_related()}},
+\code{\link[=ip_data]{ip_data()}},
+\code{\link[=mp3_get]{mp3_get()}},
+\code{\link[=readGS]{readGS()}},
+\code{\link[=splot_summary]{splot_summary()}},
+\code{\link[=stocks_quote]{stocks_quote()}}
 
-Other One Hot Encoding: 
-\code{\link{date_feats}()},
-\code{\link{ohe_commas}()},
-\code{\link{ohse}()}
+Other One Hot Encoding:
+\code{\link[=date_feats]{date_feats()}},
+\code{\link[=ohe_commas]{ohe_commas()}},
+\code{\link[=ohse]{ohse()}}
 }
 \concept{Data Wrangling}
 \concept{Feature Engineering}

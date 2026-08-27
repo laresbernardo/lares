@@ -1079,7 +1079,7 @@ splot_types <- function(s, save = FALSE) {
 #' @param etf Character Vector. Which ETFs you wish to scrap?
 #' @return data.frame with ETF break.down data by sector
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' etf_sector(etf = "VTI")
 #' }
 #' @export

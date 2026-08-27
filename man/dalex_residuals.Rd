@@ -16,9 +16,9 @@ Plot. Based of \code{explainer} residual results.
 DALEX function for residuals
 }
 \seealso{
-Other Interpretability: 
-\code{\link{dalex_local}()},
-\code{\link{dalex_variable}()},
-\code{\link{h2o_explainer}()}
+Other Interpretability:
+\code{\link[=dalex_local]{dalex_local()}},
+\code{\link[=dalex_variable]{dalex_variable()}},
+\code{\link[=h2o_explainer]{h2o_explainer()}}
 }
 \concept{Interpretability}

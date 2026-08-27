@@ -42,14 +42,14 @@ anger, sadness, fear, negative, disgust) for each of them, using NRC.
 Then, makes a summary for all words and plot results.
 }
 \seealso{
-Other Text Mining: 
-\code{\link{cleanText}()},
-\code{\link{ngrams}()},
-\code{\link{remove_stopwords}()},
-\code{\link{replaceall}()},
-\code{\link{textCloud}()},
-\code{\link{textFeats}()},
-\code{\link{textTokenizer}()},
-\code{\link{topics_rake}()}
+Other Text Mining:
+\code{\link[=cleanText]{cleanText()}},
+\code{\link[=ngrams]{ngrams()}},
+\code{\link[=remove_stopwords]{remove_stopwords()}},
+\code{\link[=replaceall]{replaceall()}},
+\code{\link[=textCloud]{textCloud()}},
+\code{\link[=textFeats]{textFeats()}},
+\code{\link[=textTokenizer]{textTokenizer()}},
+\code{\link[=topics_rake]{topics_rake()}}
 }
 \concept{Text Mining}

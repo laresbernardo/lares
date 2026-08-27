@@ -55,9 +55,9 @@ robyn_hypsbuilder(
 )
 }
 \seealso{
-Other Robyn: 
-\code{\link{robyn_marginal}()},
-\code{\link{robyn_modelselector}()},
-\code{\link{robyn_performance}()}
+Other Robyn:
+\code{\link[=robyn_marginal]{robyn_marginal()}},
+\code{\link[=robyn_modelselector]{robyn_modelselector()}},
+\code{\link[=robyn_performance]{robyn_performance()}}
 }
 \concept{Robyn}

@@ -71,7 +71,7 @@ shap_var(SHAP_values, Fare)
 }
 }
 \seealso{
-Other SHAP: 
-\code{\link{shap_var}()}
+Other SHAP:
+\code{\link[=shap_var]{shap_var()}}
 }
 \concept{SHAP}

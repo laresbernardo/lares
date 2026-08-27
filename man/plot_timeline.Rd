@@ -77,15 +77,15 @@ plot_timeline(
 )
 }
 \seealso{
-Other Visualization: 
-\code{\link{distr}()},
-\code{\link{freqs}()},
-\code{\link{freqs_df}()},
-\code{\link{freqs_list}()},
-\code{\link{freqs_plot}()},
-\code{\link{noPlot}()},
-\code{\link{plot_chord}()},
-\code{\link{plot_survey}()},
-\code{\link{tree_var}()}
+Other Visualization:
+\code{\link[=distr]{distr()}},
+\code{\link[=freqs]{freqs()}},
+\code{\link[=freqs_df]{freqs_df()}},
+\code{\link[=freqs_list]{freqs_list()}},
+\code{\link[=freqs_plot]{freqs_plot()}},
+\code{\link[=noPlot]{noPlot()}},
+\code{\link[=plot_chord]{plot_chord()}},
+\code{\link[=plot_survey]{plot_survey()}},
+\code{\link[=tree_var]{tree_var()}}
 }
 \concept{Visualization}
