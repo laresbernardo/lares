@@ -33,35 +33,35 @@ quants(dft$Age, splits = 5, "summary")
 quants(dft$Age, splits = 5, "labels")[1:10]
 }
 \seealso{
-Other Data Wrangling: 
-\code{\link{balance_data}()},
-\code{\link{categ_reducer}()},
-\code{\link{cleanText}()},
-\code{\link{date_cuts}()},
-\code{\link{date_feats}()},
-\code{\link{file_name}()},
-\code{\link{formatHTML}()},
-\code{\link{holidays}()},
-\code{\link{impute}()},
-\code{\link{left}()},
-\code{\link{normalize}()},
-\code{\link{num_abbr}()},
-\code{\link{ohe_commas}()},
-\code{\link{ohse}()},
-\code{\link{removenacols}()},
-\code{\link{replaceall}()},
-\code{\link{replacefactor}()},
-\code{\link{textFeats}()},
-\code{\link{textTokenizer}()},
-\code{\link{vector2text}()},
-\code{\link{year_month}()},
-\code{\link{zerovar}()}
+Other Data Wrangling:
+\code{\link[=balance_data]{balance_data()}},
+\code{\link[=categ_reducer]{categ_reducer()}},
+\code{\link[=cleanText]{cleanText()}},
+\code{\link[=date_cuts]{date_cuts()}},
+\code{\link[=date_feats]{date_feats()}},
+\code{\link[=file_name]{file_name()}},
+\code{\link[=formatHTML]{formatHTML()}},
+\code{\link[=holidays]{holidays()}},
+\code{\link[=impute]{impute()}},
+\code{\link[=left]{left()}},
+\code{\link[=normalize]{normalize()}},
+\code{\link[=num_abbr]{num_abbr()}},
+\code{\link[=ohe_commas]{ohe_commas()}},
+\code{\link[=ohse]{ohse()}},
+\code{\link[=removenacols]{removenacols()}},
+\code{\link[=replaceall]{replaceall()}},
+\code{\link[=replacefactor]{replacefactor()}},
+\code{\link[=textFeats]{textFeats()}},
+\code{\link[=textTokenizer]{textTokenizer()}},
+\code{\link[=vector2text]{vector2text()}},
+\code{\link[=year_month]{year_month()}},
+\code{\link[=zerovar]{zerovar()}}
 
-Other Calculus: 
-\code{\link{corr}()},
-\code{\link{corr_cross}()},
-\code{\link{dist2d}()},
-\code{\link{model_metrics}()}
+Other Calculus:
+\code{\link[=corr]{corr()}},
+\code{\link[=corr_cross]{corr_cross()}},
+\code{\link[=dist2d]{dist2d()}},
+\code{\link[=model_metrics]{model_metrics()}}
 }
 \concept{Calculus}
 \concept{Data Wrangling}

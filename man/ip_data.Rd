@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils_data.R
 \name{ip_data}
 \alias{ip_data}
-\title{Scrap data based on IP address}
+\title{Fetch IP address geolocation data}
 \usage{
 ip_data(ip = myip(), quiet = FALSE)
 }
@@ -13,67 +13,66 @@ ip_data(ip = myip(), quiet = FALSE)
 }
 \value{
 data.frame. Each row is an unique \code{ip} address,
-and columns will bee created for all the additional information found.
+and columns will be created for all the additional information found.
 }
 \description{
-This function lets the user scrap https://db-ip.com/ given
-IP address(es) to get their associated address type, ASN, ISP,
-organization, country, state or region, county, city, ZIP postal code,
-weather station, coordinates, Timezone, local time, languages, and currency.
+This function queries geolocation APIs (such as freeipapi.com and db-ip.com)
+for given IP address(es) to retrieve associated location and network information
+including country, region, city, coordinates, timezone, currency, and ASN.
 }
 \examples{
-\donttest{
+\dontrun{
 ip_data("163.114.132.0")
 ip_data(ip = c(myip(), "201.244.197.199"), quiet = TRUE)
 }
 }
 \seealso{
-Other Tools: 
-\code{\link{autoline}()},
-\code{\link{bind_files}()},
-\code{\link{bring_api}()},
-\code{\link{cal_split}()},
-\code{\link{chr2num}()},
-\code{\link{db_download}()},
-\code{\link{db_upload}()},
-\code{\link{dont_sleep}()},
-\code{\link{export_plot}()},
-\code{\link{export_results}()},
-\code{\link{files_functions}()},
-\code{\link{font_exists}()},
-\code{\link{formatColoured}()},
-\code{\link{formatHTML}()},
-\code{\link{glued}()},
-\code{\link{grepm}()},
-\code{\link{h2o_selectmodel}()},
-\code{\link{haveInternet}()},
-\code{\link{image_metadata}()},
-\code{\link{importxlsx}()},
-\code{\link{json2vector}()},
-\code{\link{list_cats}()},
-\code{\link{listfiles}()},
-\code{\link{mail_send}()},
-\code{\link{markdown2df}()},
-\code{\link{move_files}()},
-\code{\link{msplit}()},
-\code{\link{myip}()},
-\code{\link{quiet}()},
-\code{\link{read.file}()},
-\code{\link{statusbar}()},
-\code{\link{tic}()},
-\code{\link{try_require}()},
-\code{\link{updateLares}()},
-\code{\link{warnifnot}()},
-\code{\link{what_size}()}
+Other Tools:
+\code{\link[=autoline]{autoline()}},
+\code{\link[=bind_files]{bind_files()}},
+\code{\link[=bring_api]{bring_api()}},
+\code{\link[=cal_split]{cal_split()}},
+\code{\link[=chr2num]{chr2num()}},
+\code{\link[=db_download]{db_download()}},
+\code{\link[=db_upload]{db_upload()}},
+\code{\link[=dont_sleep]{dont_sleep()}},
+\code{\link[=export_plot]{export_plot()}},
+\code{\link[=export_results]{export_results()}},
+\code{\link[=files_functions]{files_functions()}},
+\code{\link[=font_exists]{font_exists()}},
+\code{\link[=formatColoured]{formatColoured()}},
+\code{\link[=formatHTML]{formatHTML()}},
+\code{\link[=glued]{glued()}},
+\code{\link[=grepm]{grepm()}},
+\code{\link[=h2o_selectmodel]{h2o_selectmodel()}},
+\code{\link[=haveInternet]{haveInternet()}},
+\code{\link[=image_metadata]{image_metadata()}},
+\code{\link[=importxlsx]{importxlsx()}},
+\code{\link[=json2vector]{json2vector()}},
+\code{\link[=list_cats]{list_cats()}},
+\code{\link[=listfiles]{listfiles()}},
+\code{\link[=mail_send]{mail_send()}},
+\code{\link[=markdown2df]{markdown2df()}},
+\code{\link[=move_files]{move_files()}},
+\code{\link[=msplit]{msplit()}},
+\code{\link[=myip]{myip()}},
+\code{\link[=quiet]{quiet()}},
+\code{\link[=read.file]{read.file()}},
+\code{\link[=statusbar]{statusbar()}},
+\code{\link[=tic]{tic()}},
+\code{\link[=try_require]{try_require()}},
+\code{\link[=updateLares]{updateLares()}},
+\code{\link[=warnifnot]{warnifnot()}},
+\code{\link[=what_size]{what_size()}}
 
-Other Scrapper: 
-\code{\link{filesGD}()},
-\code{\link{gtrends_related}()},
-\code{\link{holidays}()},
-\code{\link{mp3_get}()},
-\code{\link{readGS}()},
-\code{\link{splot_summary}()},
-\code{\link{stocks_quote}()}
+Other Scrapper:
+\code{\link[=filesGD]{filesGD()}},
+\code{\link[=gtrends_related]{gtrends_related()}},
+\code{\link[=holidays]{holidays()}},
+\code{\link[=mp3_get]{mp3_get()}},
+\code{\link[=readGS]{readGS()}},
+\code{\link[=splot_summary]{splot_summary()}},
+\code{\link[=stocks_quote]{stocks_quote()}}
 }
 \concept{Scrapper}
 \concept{Tools}

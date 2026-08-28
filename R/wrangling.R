@@ -460,8 +460,10 @@ formatNum <- function(x, decimals = 2, signif = NULL,
 #' @export
 balance_data <- function(df, var, rate = 1, target = "auto", seed = 0, quiet = FALSE) {
   on.exit(set.seed(seed))
-  if (isTRUE(try(is.character(var), silent = TRUE))) {
-    var <- eval(substitute(var), df)
+  var_env <- parent.frame()
+  var_eval <- try(eval(substitute(var), var_env), silent = TRUE)
+  if (!inherits(var_eval, "try-error") && is.character(var_eval) && length(var_eval) == 1) {
+    var <- var_eval
   } else {
     var <- as_label(enquo(var))
   }

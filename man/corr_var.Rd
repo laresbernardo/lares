@@ -91,24 +91,24 @@ dft \%>\% corr_var(Survived_TRUE, max_pvalue = 0.05)
 dft \%>\% corr_var(Survived_TRUE, ceiling = .6, top = 15, ranks = TRUE)
 }
 \seealso{
-Other Exploratory: 
-\code{\link{crosstab}()},
-\code{\link{df_str}()},
-\code{\link{distr}()},
-\code{\link{freqs}()},
-\code{\link{freqs_df}()},
-\code{\link{freqs_list}()},
-\code{\link{freqs_plot}()},
-\code{\link{lasso_vars}()},
-\code{\link{missingness}()},
-\code{\link{plot_cats}()},
-\code{\link{plot_df}()},
-\code{\link{plot_nums}()},
-\code{\link{tree_var}()}
+Other Exploratory:
+\code{\link[=crosstab]{crosstab()}},
+\code{\link[=df_str]{df_str()}},
+\code{\link[=distr]{distr()}},
+\code{\link[=freqs]{freqs()}},
+\code{\link[=freqs_df]{freqs_df()}},
+\code{\link[=freqs_list]{freqs_list()}},
+\code{\link[=freqs_plot]{freqs_plot()}},
+\code{\link[=lasso_vars]{lasso_vars()}},
+\code{\link[=missingness]{missingness()}},
+\code{\link[=plot_cats]{plot_cats()}},
+\code{\link[=plot_df]{plot_df()}},
+\code{\link[=plot_nums]{plot_nums()}},
+\code{\link[=tree_var]{tree_var()}}
 
-Other Correlations: 
-\code{\link{corr}()},
-\code{\link{corr_cross}()}
+Other Correlations:
+\code{\link[=corr]{corr()}},
+\code{\link[=corr_cross]{corr_cross()}}
 }
 \concept{Correlations}
 \concept{Exploratory}

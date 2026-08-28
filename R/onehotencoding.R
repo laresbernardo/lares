@@ -412,7 +412,7 @@ date_feats <- function(dates,
 #' This function lets the user automatically retrieve public holiday dates
 #' for any country supported by the Nager.Date API. Accepts country names
 #' (e.g., "Portugal") or ISO 3166-1 alpha-2 codes (e.g., "PT").
-#' Thanks to \href{https://date.nager.at}{Nager.Date}!
+#' Thanks to \href{https://nagerholidays.com/}{Nager.Date}!
 #'
 #' @family Data Wrangling
 #' @family Feature Engineering

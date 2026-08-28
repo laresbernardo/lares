@@ -30,16 +30,16 @@ head(result)
 }
 }
 \seealso{
-Other Credentials: 
-\code{\link{db_download}()},
-\code{\link{db_upload}()},
-\code{\link{encrypt_file}()},
-\code{\link{get_credentials}()},
-\code{\link{get_tweets}()},
-\code{\link{mail_send}()},
-\code{\link{queryGA}()},
-\code{\link{slackSend}()},
-\code{\link{stocks_file}()}
+Other Credentials:
+\code{\link[=db_download]{db_download()}},
+\code{\link[=db_upload]{db_upload()}},
+\code{\link[=encrypt_file]{encrypt_file()}},
+\code{\link[=get_credentials]{get_credentials()}},
+\code{\link[=get_tweets]{get_tweets()}},
+\code{\link[=mail_send]{mail_send()}},
+\code{\link[=queryGA]{queryGA()}},
+\code{\link[=slackSend]{slackSend()}},
+\code{\link[=stocks_file]{stocks_file()}}
 }
 \concept{Credentials}
 \concept{Database}

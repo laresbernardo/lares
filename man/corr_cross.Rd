@@ -83,15 +83,15 @@ corr_cross(dft, contains = c("Survived", "Fare"))
 corr_cross(dft, type = 2, top = NA)
 }
 \seealso{
-Other Calculus: 
-\code{\link{corr}()},
-\code{\link{dist2d}()},
-\code{\link{model_metrics}()},
-\code{\link{quants}()}
+Other Calculus:
+\code{\link[=corr]{corr()}},
+\code{\link[=dist2d]{dist2d()}},
+\code{\link[=model_metrics]{model_metrics()}},
+\code{\link[=quants]{quants()}}
 
-Other Correlations: 
-\code{\link{corr}()},
-\code{\link{corr_var}()}
+Other Correlations:
+\code{\link[=corr]{corr()}},
+\code{\link[=corr_var]{corr_var()}}
 }
 \concept{Calculus}
 \concept{Correlations}

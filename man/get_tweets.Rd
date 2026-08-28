@@ -20,16 +20,16 @@ data.frame with API response results.
 This function downloads tweets with personal credentials
 }
 \seealso{
-Other Credentials: 
-\code{\link{db_download}()},
-\code{\link{db_upload}()},
-\code{\link{encrypt_file}()},
-\code{\link{get_credentials}()},
-\code{\link{mail_send}()},
-\code{\link{queryDB}()},
-\code{\link{queryGA}()},
-\code{\link{slackSend}()},
-\code{\link{stocks_file}()}
+Other Credentials:
+\code{\link[=db_download]{db_download()}},
+\code{\link[=db_upload]{db_upload()}},
+\code{\link[=encrypt_file]{encrypt_file()}},
+\code{\link[=get_credentials]{get_credentials()}},
+\code{\link[=mail_send]{mail_send()}},
+\code{\link[=queryDB]{queryDB()}},
+\code{\link[=queryGA]{queryGA()}},
+\code{\link[=slackSend]{slackSend()}},
+\code{\link[=stocks_file]{stocks_file()}}
 }
 \concept{Credentials}
 \concept{Twitter}

@@ -19,11 +19,11 @@ models. NOTE: when result is 0.69315, the classification is neutral;
 it assigns equal probability to both classes.
 }
 \seealso{
-Other Model metrics: 
-\code{\link{ROC}()},
-\code{\link{conf_mat}()},
-\code{\link{errors}()},
-\code{\link{gain_lift}()},
-\code{\link{model_metrics}()}
+Other Model metrics:
+\code{\link[=ROC]{ROC()}},
+\code{\link[=conf_mat]{conf_mat()}},
+\code{\link[=errors]{errors()}},
+\code{\link[=gain_lift]{gain_lift()}},
+\code{\link[=model_metrics]{model_metrics()}}
 }
 \concept{Model metrics}

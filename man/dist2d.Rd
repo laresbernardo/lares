@@ -27,10 +27,10 @@ dist2d(x = c(5, 2), a = c(0, 0), b = c(0, 1))
 dist2d(x = c(5, 2), a = c(0, 0), b = c(1, 0))
 }
 \seealso{
-Other Calculus: 
-\code{\link{corr}()},
-\code{\link{corr_cross}()},
-\code{\link{model_metrics}()},
-\code{\link{quants}()}
+Other Calculus:
+\code{\link[=corr]{corr()}},
+\code{\link[=corr_cross]{corr_cross()}},
+\code{\link[=model_metrics]{model_metrics()}},
+\code{\link[=quants]{quants()}}
 }
 \concept{Calculus}

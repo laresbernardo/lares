@@ -24,9 +24,9 @@ List. Containing observation, breakdown results, and breakdown plot.
 DALEX function for local interpretations
 }
 \seealso{
-Other Interpretability: 
-\code{\link{dalex_residuals}()},
-\code{\link{dalex_variable}()},
-\code{\link{h2o_explainer}()}
+Other Interpretability:
+\code{\link[=dalex_residuals]{dalex_residuals()}},
+\code{\link[=dalex_variable]{dalex_variable()}},
+\code{\link[=h2o_explainer]{h2o_explainer()}}
 }
 \concept{Interpretability}

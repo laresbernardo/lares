@@ -47,23 +47,23 @@ missingness(df, plot = TRUE)
 missingness(df, plot = TRUE, full = TRUE)
 }
 \seealso{
-Other Exploratory: 
-\code{\link{corr_var}()},
-\code{\link{crosstab}()},
-\code{\link{df_str}()},
-\code{\link{distr}()},
-\code{\link{freqs}()},
-\code{\link{freqs_df}()},
-\code{\link{freqs_list}()},
-\code{\link{freqs_plot}()},
-\code{\link{lasso_vars}()},
-\code{\link{plot_cats}()},
-\code{\link{plot_df}()},
-\code{\link{plot_nums}()},
-\code{\link{tree_var}()}
+Other Exploratory:
+\code{\link[=corr_var]{corr_var()}},
+\code{\link[=crosstab]{crosstab()}},
+\code{\link[=df_str]{df_str()}},
+\code{\link[=distr]{distr()}},
+\code{\link[=freqs]{freqs()}},
+\code{\link[=freqs_df]{freqs_df()}},
+\code{\link[=freqs_list]{freqs_list()}},
+\code{\link[=freqs_plot]{freqs_plot()}},
+\code{\link[=lasso_vars]{lasso_vars()}},
+\code{\link[=plot_cats]{plot_cats()}},
+\code{\link[=plot_df]{plot_df()}},
+\code{\link[=plot_nums]{plot_nums()}},
+\code{\link[=tree_var]{tree_var()}}
 
-Other Missing Values: 
-\code{\link{impute}()}
+Other Missing Values:
+\code{\link[=impute]{impute()}}
 }
 \concept{Exploratory}
 \concept{Missing Values}

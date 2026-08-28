@@ -42,7 +42,7 @@ data(dft)
 head(dft)
 }
 \seealso{
-Other Dataset: 
+Other Dataset:
 \code{\link{dfr}}
 }
 \concept{Dataset}

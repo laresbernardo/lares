@@ -73,9 +73,9 @@ options("lares.colours.custom" = NULL)
 run_plot(add_fxs = FALSE) + theme_lares(pal = 4)
 }
 \seealso{
-Other Themes: 
-\code{\link{lares_pal}()},
-\code{\link{plot_palette}()},
-\code{\link{theme_lares}()}
+Other Themes:
+\code{\link[=lares_pal]{lares_pal()}},
+\code{\link[=plot_palette]{plot_palette()}},
+\code{\link[=theme_lares]{theme_lares()}}
 }
 \concept{Themes}

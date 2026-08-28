@@ -69,19 +69,19 @@ Read and write data from Google Sheets knowing the file's title.
 You may use a single value from a cell or a data.frame from a cell range.
 }
 \seealso{
-Other Scrapper: 
-\code{\link{filesGD}()},
-\code{\link{gtrends_related}()},
-\code{\link{holidays}()},
-\code{\link{ip_data}()},
-\code{\link{mp3_get}()},
-\code{\link{splot_summary}()},
-\code{\link{stocks_quote}()}
+Other Scrapper:
+\code{\link[=filesGD]{filesGD()}},
+\code{\link[=gtrends_related]{gtrends_related()}},
+\code{\link[=holidays]{holidays()}},
+\code{\link[=ip_data]{ip_data()}},
+\code{\link[=mp3_get]{mp3_get()}},
+\code{\link[=splot_summary]{splot_summary()}},
+\code{\link[=stocks_quote]{stocks_quote()}}
 
-Other Google: 
-\code{\link{filesGD}()},
-\code{\link{gtrends_related}()},
-\code{\link{queryGA}()}
+Other Google:
+\code{\link[=filesGD]{filesGD()}},
+\code{\link[=gtrends_related]{gtrends_related()}},
+\code{\link[=queryGA]{queryGA()}}
 }
 \concept{Google}
 \concept{Scrapper}

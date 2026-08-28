@@ -31,7 +31,7 @@ ci_lower(100, 5, 10)
 ci_upper(100, 5, 10)
 }
 \seealso{
-Other Confidence: 
-\code{\link{ci_var}()}
+Other Confidence:
+\code{\link[=ci_var]{ci_var()}}
 }
 \concept{Confidence}

@@ -91,15 +91,15 @@ df$trash <- c(1, rep(NA, nrow(df) - 1))
 corr(df, method = "spearman")
 }
 \seealso{
-Other Calculus: 
-\code{\link{corr_cross}()},
-\code{\link{dist2d}()},
-\code{\link{model_metrics}()},
-\code{\link{quants}()}
+Other Calculus:
+\code{\link[=corr_cross]{corr_cross()}},
+\code{\link[=dist2d]{dist2d()}},
+\code{\link[=model_metrics]{model_metrics()}},
+\code{\link[=quants]{quants()}}
 
-Other Correlations: 
-\code{\link{corr_cross}()},
-\code{\link{corr_var}()}
+Other Correlations:
+\code{\link[=corr_cross]{corr_cross()}},
+\code{\link[=corr_var]{corr_var()}}
 }
 \concept{Calculus}
 \concept{Correlations}

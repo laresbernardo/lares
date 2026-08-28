@@ -65,9 +65,9 @@ robyn_performance(mod$InputCollect, mod$OutputCollect)
 }
 }
 \seealso{
-Other Robyn: 
-\code{\link{robyn_hypsbuilder}()},
-\code{\link{robyn_marginal}()},
-\code{\link{robyn_modelselector}()}
+Other Robyn:
+\code{\link[=robyn_hypsbuilder]{robyn_hypsbuilder()}},
+\code{\link[=robyn_marginal]{robyn_marginal()}},
+\code{\link[=robyn_modelselector]{robyn_modelselector()}}
 }
 \concept{Robyn}

@@ -86,38 +86,38 @@ dft$no_variance4 <- c(rep("A", 20), round(rnorm(nrow(dft) - 20), 4))
 ohse(dft, limit = 3) \%>\% head(3)
 }
 \seealso{
-Other Data Wrangling: 
-\code{\link{balance_data}()},
-\code{\link{categ_reducer}()},
-\code{\link{cleanText}()},
-\code{\link{date_cuts}()},
-\code{\link{date_feats}()},
-\code{\link{file_name}()},
-\code{\link{formatHTML}()},
-\code{\link{holidays}()},
-\code{\link{impute}()},
-\code{\link{left}()},
-\code{\link{normalize}()},
-\code{\link{num_abbr}()},
-\code{\link{ohe_commas}()},
-\code{\link{quants}()},
-\code{\link{removenacols}()},
-\code{\link{replaceall}()},
-\code{\link{replacefactor}()},
-\code{\link{textFeats}()},
-\code{\link{textTokenizer}()},
-\code{\link{vector2text}()},
-\code{\link{year_month}()},
-\code{\link{zerovar}()}
+Other Data Wrangling:
+\code{\link[=balance_data]{balance_data()}},
+\code{\link[=categ_reducer]{categ_reducer()}},
+\code{\link[=cleanText]{cleanText()}},
+\code{\link[=date_cuts]{date_cuts()}},
+\code{\link[=date_feats]{date_feats()}},
+\code{\link[=file_name]{file_name()}},
+\code{\link[=formatHTML]{formatHTML()}},
+\code{\link[=holidays]{holidays()}},
+\code{\link[=impute]{impute()}},
+\code{\link[=left]{left()}},
+\code{\link[=normalize]{normalize()}},
+\code{\link[=num_abbr]{num_abbr()}},
+\code{\link[=ohe_commas]{ohe_commas()}},
+\code{\link[=quants]{quants()}},
+\code{\link[=removenacols]{removenacols()}},
+\code{\link[=replaceall]{replaceall()}},
+\code{\link[=replacefactor]{replacefactor()}},
+\code{\link[=textFeats]{textFeats()}},
+\code{\link[=textTokenizer]{textTokenizer()}},
+\code{\link[=vector2text]{vector2text()}},
+\code{\link[=year_month]{year_month()}},
+\code{\link[=zerovar]{zerovar()}}
 
-Other Feature Engineering: 
-\code{\link{date_feats}()},
-\code{\link{holidays}()}
+Other Feature Engineering:
+\code{\link[=date_feats]{date_feats()}},
+\code{\link[=holidays]{holidays()}}
 
-Other One Hot Encoding: 
-\code{\link{date_feats}()},
-\code{\link{holidays}()},
-\code{\link{ohe_commas}()}
+Other One Hot Encoding:
+\code{\link[=date_feats]{date_feats()}},
+\code{\link[=holidays]{holidays()}},
+\code{\link[=ohe_commas]{ohe_commas()}}
 }
 \concept{Data Wrangling}
 \concept{Feature Engineering}

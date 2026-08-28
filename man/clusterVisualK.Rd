@@ -34,10 +34,10 @@ plot(result$plot)
 lapply(result$data, function(x) head(x$cluster, 10))
 }
 \seealso{
-Other Clusters: 
-\code{\link{clusterKmeans}()},
-\code{\link{clusterOptimalK}()},
-\code{\link{reduce_pca}()},
-\code{\link{reduce_tsne}()}
+Other Clusters:
+\code{\link[=clusterKmeans]{clusterKmeans()}},
+\code{\link[=clusterOptimalK]{clusterOptimalK()}},
+\code{\link[=reduce_pca]{reduce_pca()}},
+\code{\link[=reduce_tsne]{reduce_tsne()}}
 }
 \concept{Clusters}

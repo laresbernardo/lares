@@ -25,19 +25,19 @@ Vector with found file names based on \code{title} on Google Drive.
 Authenticate and find Google Drive files and IDs by name.
 }
 \seealso{
-Other Scrapper: 
-\code{\link{gtrends_related}()},
-\code{\link{holidays}()},
-\code{\link{ip_data}()},
-\code{\link{mp3_get}()},
-\code{\link{readGS}()},
-\code{\link{splot_summary}()},
-\code{\link{stocks_quote}()}
+Other Scrapper:
+\code{\link[=gtrends_related]{gtrends_related()}},
+\code{\link[=holidays]{holidays()}},
+\code{\link[=ip_data]{ip_data()}},
+\code{\link[=mp3_get]{mp3_get()}},
+\code{\link[=readGS]{readGS()}},
+\code{\link[=splot_summary]{splot_summary()}},
+\code{\link[=stocks_quote]{stocks_quote()}}
 
-Other Google: 
-\code{\link{gtrends_related}()},
-\code{\link{queryGA}()},
-\code{\link{readGS}()}
+Other Google:
+\code{\link[=gtrends_related]{gtrends_related()}},
+\code{\link[=queryGA]{queryGA()}},
+\code{\link[=readGS]{readGS()}}
 }
 \concept{Google}
 \concept{Scrapper}
