@@ -39,6 +39,11 @@
       Sys.getenv("LARES_GEMINI_API")
     } else {
       "https://generativelanguage.googleapis.com/v1beta/models/"
+    },
+    "LARES_GEMINI_MODEL" = if (Sys.getenv("LARES_GEMINI_MODEL") != "") {
+      Sys.getenv("LARES_GEMINI_MODEL")
+    } else {
+      "gemini-3.5-flash-lite"
     }
   )
   options(
