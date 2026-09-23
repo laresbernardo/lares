@@ -188,8 +188,10 @@ corr_var <- function(df, var,
                      save = FALSE,
                      quiet = FALSE,
                      ...) {
-  if (isTRUE(try(is.character(var), silent = TRUE))) {
-    var <- eval(substitute(var), df)
+  var_env <- parent.frame()
+  var_eval <- try(eval(substitute(var), var_env), silent = TRUE)
+  if (!inherits(var_eval, "try-error") && is.character(var_eval) && length(var_eval) == 1) {
+    var <- var_eval
   } else {
     var <- as_label(enquo(var))
   }

@@ -46,7 +46,7 @@ data and shifts in the trend, and typically handles outliers well.
 Official documentation: \url{https://github.com/facebook/prophet}
 }
 \seealso{
-Other Forecast: 
-\code{\link{forecast_arima}()}
+Other Forecast:
+\code{\link[=forecast_arima]{forecast_arima()}}
 }
 \concept{Forecast}

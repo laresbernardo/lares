@@ -160,9 +160,9 @@ if (haveInternet()) {
 }
 }
 \seealso{
-Other Games: 
-\code{\link{maze_solve}()},
-\code{\link{sudoku_solver}()},
-\code{\link{wordle_check}()}
+Other Games:
+\code{\link[=maze_solve]{maze_solve()}},
+\code{\link[=sudoku_solver]{sudoku_solver()}},
+\code{\link[=wordle_check]{wordle_check()}}
 }
 \concept{Games}

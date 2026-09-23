@@ -87,16 +87,16 @@ fromJSON(read_encrypted(temp_output, key = raw_key))
 }
 }
 \seealso{
-Other Credentials: 
-\code{\link{db_download}()},
-\code{\link{db_upload}()},
-\code{\link{get_credentials}()},
-\code{\link{get_tweets}()},
-\code{\link{mail_send}()},
-\code{\link{queryDB}()},
-\code{\link{queryGA}()},
-\code{\link{slackSend}()},
-\code{\link{stocks_file}()}
+Other Credentials:
+\code{\link[=db_download]{db_download()}},
+\code{\link[=db_upload]{db_upload()}},
+\code{\link[=get_credentials]{get_credentials()}},
+\code{\link[=get_tweets]{get_tweets()}},
+\code{\link[=mail_send]{mail_send()}},
+\code{\link[=queryDB]{queryDB()}},
+\code{\link[=queryGA]{queryGA()}},
+\code{\link[=slackSend]{slackSend()}},
+\code{\link[=stocks_file]{stocks_file()}}
 }
 \concept{Credentials}
 \keyword{Decryption}

@@ -109,10 +109,10 @@ plot(clusters$PCA$plot_explained)
 plot(clusters$PCA$plot)
 }
 \seealso{
-Other Clusters: 
-\code{\link{clusterOptimalK}()},
-\code{\link{clusterVisualK}()},
-\code{\link{reduce_pca}()},
-\code{\link{reduce_tsne}()}
+Other Clusters:
+\code{\link[=clusterOptimalK]{clusterOptimalK()}},
+\code{\link[=clusterVisualK]{clusterVisualK()}},
+\code{\link[=reduce_pca]{reduce_pca()}},
+\code{\link[=reduce_tsne]{reduce_tsne()}}
 }
 \concept{Clusters}

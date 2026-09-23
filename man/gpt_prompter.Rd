@@ -127,12 +127,12 @@ gpt_prompter(
 )$prompt
 }
 \seealso{
-Other ChatGPT: 
-\code{\link{gpt_ask}()}
+Other ChatGPT:
+\code{\link[=gpt_ask]{gpt_ask()}}
 
-Other LLM: 
-\code{\link{gemini_ask}()},
-\code{\link{gpt_ask}()}
+Other LLM:
+\code{\link[=gemini_ask]{gemini_ask()}},
+\code{\link[=gpt_ask]{gpt_ask()}}
 }
 \concept{ChatGPT}
 \concept{LLM}

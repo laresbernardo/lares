@@ -21,14 +21,14 @@ data.frame with ETF break.down data by sector
 Use \code{splot_etf()} for visualization.
 }
 \examples{
-\donttest{
+\dontrun{
 etf_sector(etf = "VTI")
 }
 }
 \seealso{
-Other Investment: 
-\code{\link{splot_summary}()},
-\code{\link{stocks_file}()},
-\code{\link{stocks_quote}()}
+Other Investment:
+\code{\link[=splot_summary]{splot_summary()}},
+\code{\link[=stocks_file]{stocks_file()}},
+\code{\link[=stocks_quote]{stocks_quote()}}
 }
 \concept{Investment}

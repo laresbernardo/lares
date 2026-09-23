@@ -43,14 +43,14 @@ Study the distribution of a target variable vs another variable. This
 function is quite similar to the funModeling's corrplot function.
 }
 \seealso{
-Other Text Mining: 
-\code{\link{cleanText}()},
-\code{\link{ngrams}()},
-\code{\link{remove_stopwords}()},
-\code{\link{replaceall}()},
-\code{\link{sentimentBreakdown}()},
-\code{\link{textFeats}()},
-\code{\link{textTokenizer}()},
-\code{\link{topics_rake}()}
+Other Text Mining:
+\code{\link[=cleanText]{cleanText()}},
+\code{\link[=ngrams]{ngrams()}},
+\code{\link[=remove_stopwords]{remove_stopwords()}},
+\code{\link[=replaceall]{replaceall()}},
+\code{\link[=sentimentBreakdown]{sentimentBreakdown()}},
+\code{\link[=textFeats]{textFeats()}},
+\code{\link[=textTokenizer]{textTokenizer()}},
+\code{\link[=topics_rake]{topics_rake()}}
 }
 \concept{Text Mining}

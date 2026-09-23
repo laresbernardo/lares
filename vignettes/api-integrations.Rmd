@@ -397,9 +397,10 @@ Set global defaults via environment variables:
 # LARES_GPT_MODEL=gpt-4
 # LARES_GPT_URL=https://api.openai.com/v1/chat/completions
 # LARES_GEMINI_API=https://generativelanguage.googleapis.com/v1beta/models/
+# LARES_GEMINI_MODEL=gemini-3.5-flash-lite
 
 # Check current settings
-Sys.getenv(c("LARES_GPT_MODEL", "LARES_GEMINI_API"))
+Sys.getenv(c("LARES_GPT_MODEL", "LARES_GEMINI_API", "LARES_GEMINI_MODEL"))
 ```
 
 ## Troubleshooting

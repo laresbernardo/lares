@@ -51,14 +51,14 @@ df$id <- seq_len(nrow(df))
 reduce_pca(df, n = 3, ignore = "id")
 }
 \seealso{
-Other Dimensionality: 
-\code{\link{reduce_tsne}()}
+Other Dimensionality:
+\code{\link[=reduce_tsne]{reduce_tsne()}}
 
-Other Clusters: 
-\code{\link{clusterKmeans}()},
-\code{\link{clusterOptimalK}()},
-\code{\link{clusterVisualK}()},
-\code{\link{reduce_tsne}()}
+Other Clusters:
+\code{\link[=clusterKmeans]{clusterKmeans()}},
+\code{\link[=clusterOptimalK]{clusterOptimalK()}},
+\code{\link[=clusterVisualK]{clusterVisualK()}},
+\code{\link[=reduce_tsne]{reduce_tsne()}}
 }
 \concept{Clusters}
 \concept{Dimensionality}

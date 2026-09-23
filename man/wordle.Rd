@@ -77,9 +77,9 @@ print(x)
 }
 }
 \seealso{
-Other Games: 
-\code{\link{maze_solve}()},
-\code{\link{scrabble_dictionary}()},
-\code{\link{sudoku_solver}()}
+Other Games:
+\code{\link[=maze_solve]{maze_solve()}},
+\code{\link[=scrabble_dictionary]{scrabble_dictionary()}},
+\code{\link[=sudoku_solver]{sudoku_solver()}}
 }
 \concept{Games}

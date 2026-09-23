@@ -53,7 +53,7 @@ shap_var(SHAP_values, Fare)
 }
 }
 \seealso{
-Other SHAP: 
-\code{\link{h2o_shap}()}
+Other SHAP:
+\code{\link[=h2o_shap]{h2o_shap()}}
 }
 \concept{SHAP}

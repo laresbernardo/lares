@@ -82,18 +82,18 @@ mp3_get("m3RX4LJh0iI", repo = "yt-dlp")
 }
 }
 \seealso{
-Other Scrapper: 
-\code{\link{filesGD}()},
-\code{\link{gtrends_related}()},
-\code{\link{holidays}()},
-\code{\link{ip_data}()},
-\code{\link{readGS}()},
-\code{\link{splot_summary}()},
-\code{\link{stocks_quote}()}
+Other Scrapper:
+\code{\link[=filesGD]{filesGD()}},
+\code{\link[=gtrends_related]{gtrends_related()}},
+\code{\link[=holidays]{holidays()}},
+\code{\link[=ip_data]{ip_data()}},
+\code{\link[=readGS]{readGS()}},
+\code{\link[=splot_summary]{splot_summary()}},
+\code{\link[=stocks_quote]{stocks_quote()}}
 
-Other Audio: 
-\code{\link{mp3_trim}()},
-\code{\link{mp3_update_tags}()}
+Other Audio:
+\code{\link[=mp3_trim]{mp3_trim()}},
+\code{\link[=mp3_update_tags]{mp3_update_tags()}}
 }
 \concept{Audio}
 \concept{Scrapper}

@@ -9,6 +9,7 @@ gemini_ask(
   ask,
   secret_key = get_creds("gemini")$api_key,
   url = Sys.getenv("LARES_GEMINI_API"),
+  model = Sys.getenv("LARES_GEMINI_MODEL"),
   temperature = 0.5,
   max_tokens = 1024,
   quiet = FALSE,
@@ -20,6 +21,7 @@ gemini_image(
   image,
   secret_key = get_creds("gemini")$api_key,
   url = Sys.getenv("LARES_GEMINI_API"),
+  model = Sys.getenv("LARES_GEMINI_MODEL"),
   temperature = 0.5,
   max_tokens = 1024,
   quiet = FALSE,
@@ -35,6 +37,10 @@ platform.openai.com for OpenAI or makersuite.google.com/app/apikey
 for Gemini.}
 
 \item{url}{Character. Base API URL.}
+
+\item{model}{Character. Gemini model to use (e.g., "gemini-3.5-flash-lite",
+"gemini-2.5-flash", "gemini-2.5-pro"). Defaults to the
+\code{LARES_GEMINI_MODEL} environment variable.}
 
 \item{temperature}{Numeric. The temperature to use for generating
 the response. Default is 0.5. The lower the \code{temperature},
@@ -71,26 +77,28 @@ gemini_ask("Can you write an R function to plot a dummy histogram?", api_key)
 # Image question
 image <- "man/figures/automl_map.png"
 gemini_image("Can you explain this flow with more detail?", image, api_key)
+# Use a specific model
+gemini_ask("Explain R's pipe operator", model = "gemini-3.5-flash-lite")
 }
 }
 \seealso{
-Other API: 
-\code{\link{bring_api}()},
-\code{\link{fb_accounts}()},
-\code{\link{fb_ads}()},
-\code{\link{fb_creatives}()},
-\code{\link{fb_insights}()},
-\code{\link{fb_process}()},
-\code{\link{fb_report_check}()},
-\code{\link{fb_rf}()},
-\code{\link{fb_token}()},
-\code{\link{gpt_ask}()},
-\code{\link{queryGA}()},
-\code{\link{slackSend}()}
+Other API:
+\code{\link[=bring_api]{bring_api()}},
+\code{\link[=fb_accounts]{fb_accounts()}},
+\code{\link[=fb_ads]{fb_ads()}},
+\code{\link[=fb_creatives]{fb_creatives()}},
+\code{\link[=fb_insights]{fb_insights()}},
+\code{\link[=fb_process]{fb_process()}},
+\code{\link[=fb_report_check]{fb_report_check()}},
+\code{\link[=fb_rf]{fb_rf()}},
+\code{\link[=fb_token]{fb_token()}},
+\code{\link[=gpt_ask]{gpt_ask()}},
+\code{\link[=queryGA]{queryGA()}},
+\code{\link[=slackSend]{slackSend()}}
 
-Other LLM: 
-\code{\link{gpt_ask}()},
-\code{\link{gpt_prompter}()}
+Other LLM:
+\code{\link[=gpt_ask]{gpt_ask()}},
+\code{\link[=gpt_prompter]{gpt_prompter()}}
 }
 \concept{API}
 \concept{Gemini}

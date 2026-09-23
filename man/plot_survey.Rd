@@ -23,15 +23,15 @@ ggplot2 object
 This function lets the user plot a survey's result.
 }
 \seealso{
-Other Visualization: 
-\code{\link{distr}()},
-\code{\link{freqs}()},
-\code{\link{freqs_df}()},
-\code{\link{freqs_list}()},
-\code{\link{freqs_plot}()},
-\code{\link{noPlot}()},
-\code{\link{plot_chord}()},
-\code{\link{plot_timeline}()},
-\code{\link{tree_var}()}
+Other Visualization:
+\code{\link[=distr]{distr()}},
+\code{\link[=freqs]{freqs()}},
+\code{\link[=freqs_df]{freqs_df()}},
+\code{\link[=freqs_list]{freqs_list()}},
+\code{\link[=freqs_plot]{freqs_plot()}},
+\code{\link[=noPlot]{noPlot()}},
+\code{\link[=plot_chord]{plot_chord()}},
+\code{\link[=plot_timeline]{plot_timeline()}},
+\code{\link[=tree_var]{tree_var()}}
 }
 \concept{Visualization}

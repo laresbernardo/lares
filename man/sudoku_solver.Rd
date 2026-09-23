@@ -47,9 +47,9 @@ sudoku_solver(imp)
 }
 }
 \seealso{
-Other Games: 
-\code{\link{maze_solve}()},
-\code{\link{scrabble_dictionary}()},
-\code{\link{wordle_check}()}
+Other Games:
+\code{\link[=maze_solve]{maze_solve()}},
+\code{\link[=scrabble_dictionary]{scrabble_dictionary()}},
+\code{\link[=wordle_check]{wordle_check()}}
 }
 \concept{Games}

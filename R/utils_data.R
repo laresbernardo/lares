@@ -1,42 +1,62 @@
 ####################################################################
-#' Scrap data based on IP address
+#' Fetch IP address geolocation data
 #'
-#' This function lets the user scrap https://db-ip.com/ given
-#' IP address(es) to get their associated address type, ASN, ISP,
-#' organization, country, state or region, county, city, ZIP postal code,
-#' weather station, coordinates, Timezone, local time, languages, and currency.
+#' This function queries geolocation APIs (such as freeipapi.com and db-ip.com)
+#' for given IP address(es) to retrieve associated location and network information
+#' including country, region, city, coordinates, timezone, currency, and ASN.
 #'
 #' @family Tools
 #' @family Scrapper
 #' @param ip Vector. Vector with all IP's we wish to search.
 #' @param quiet Boolean. Do not show the loading \code{statusbar}?
 #' @return data.frame. Each row is an unique \code{ip} address,
-#' and columns will bee created for all the additional information found.
+#' and columns will be created for all the additional information found.
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' ip_data("163.114.132.0")
 #' ip_data(ip = c(myip(), "201.244.197.199"), quiet = TRUE)
 #' }
 #' @export
 ip_data <- function(ip = myip(), quiet = FALSE) {
   if (!haveInternet()) {
-    message("No internet connetion...")
+    message("No internet connection...")
     invisible(NULL)
   } else {
+    if (is.null(ip)) return(invisible(NULL))
     ip <- ip[!is.na(ip)]
     ip <- ip[is_ip(ip)]
     ip <- unique(ip)
+    if (length(ip) == 0) return(invisible(NULL))
     output <- data.frame()
     for (i in seq_along(ip)) {
-      url <- paste0("https://db-ip.com/", ip[i])
-      scrap <- content(GET(url)) %>% html_table()
-      clean <- bind_rows(scrap[[1]], scrap[[3]])
-      row <- data.frame(t(clean[, 2]))
-      colnames(row) <- clean$X1
-      row <- data.frame(id = ip[i], row)
-      output <- bind_rows(output, row)
+      row <- NULL
+      # Primary: freeipapi.com
+      url <- paste0("https://freeipapi.com/api/json/", ip[i])
+      req <- tryCatch(GET(url, timeout(5)), error = function(e) NULL)
+      if (!is.null(req) && status_code(req) == 200) {
+        dat <- tryCatch(fromJSON(content(req, as = "text", encoding = "UTF-8")), error = function(e) NULL)
+        if (is.list(dat) && length(dat) > 0) {
+          dat <- lapply(dat, function(x) if (length(x) > 1) paste(x, collapse = ", ") else if (is.null(x)) NA else x)
+          row <- as.data.frame(dat, stringsAsFactors = FALSE)
+        }
+      }
+      # Fallback: api.db-ip.com
+      if (is.null(row)) {
+        url2 <- paste0("https://api.db-ip.com/v2/free/", ip[i])
+        req2 <- tryCatch(GET(url2, timeout(5)), error = function(e) NULL)
+        if (!is.null(req2) && status_code(req2) == 200) {
+          dat2 <- tryCatch(fromJSON(content(req2, as = "text", encoding = "UTF-8")), error = function(e) NULL)
+          if (is.list(dat2) && length(dat2) > 0) {
+            row <- as.data.frame(dat2, stringsAsFactors = FALSE)
+          }
+        }
+      }
+      if (!is.null(row)) {
+        output <- bind_rows(output, row)
+      }
       if (length(ip) > 1 && !quiet) statusbar(i, length(ip), ip[i])
     }
+    if (nrow(output) == 0) return(invisible(NULL))
     output <- cleanNames(output)
     row.names(output) <- NULL
     output

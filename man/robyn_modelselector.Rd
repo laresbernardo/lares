@@ -79,9 +79,9 @@ Read more about this functionality in Medium post:
 \href{https://medium.com/@laresbernardo/select-the-right-mmm-candidate-based-on-your-specific-criteria-and-business-knowledge-1f583c3cb97a}{here}.
 }
 \seealso{
-Other Robyn: 
-\code{\link{robyn_hypsbuilder}()},
-\code{\link{robyn_marginal}()},
-\code{\link{robyn_performance}()}
+Other Robyn:
+\code{\link[=robyn_hypsbuilder]{robyn_hypsbuilder()}},
+\code{\link[=robyn_marginal]{robyn_marginal()}},
+\code{\link[=robyn_performance]{robyn_performance()}}
 }
 \concept{Robyn}

@@ -149,21 +149,21 @@ stocks_report(list, dir = "~/Desktop")
 }
 }
 \seealso{
-Other Investment: 
-\code{\link{etf_sector}()},
-\code{\link{splot_summary}()},
-\code{\link{stocks_quote}()}
+Other Investment:
+\code{\link[=etf_sector]{etf_sector()}},
+\code{\link[=splot_summary]{splot_summary()}},
+\code{\link[=stocks_quote]{stocks_quote()}}
 
-Other Credentials: 
-\code{\link{db_download}()},
-\code{\link{db_upload}()},
-\code{\link{encrypt_file}()},
-\code{\link{get_credentials}()},
-\code{\link{get_tweets}()},
-\code{\link{mail_send}()},
-\code{\link{queryDB}()},
-\code{\link{queryGA}()},
-\code{\link{slackSend}()}
+Other Credentials:
+\code{\link[=db_download]{db_download()}},
+\code{\link[=db_upload]{db_upload()}},
+\code{\link[=encrypt_file]{encrypt_file()}},
+\code{\link[=get_credentials]{get_credentials()}},
+\code{\link[=get_tweets]{get_tweets()}},
+\code{\link[=mail_send]{mail_send()}},
+\code{\link[=queryDB]{queryDB()}},
+\code{\link[=queryGA]{queryGA()}},
+\code{\link[=slackSend]{slackSend()}}
 }
 \concept{Credentials}
 \concept{Investment}

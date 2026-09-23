@@ -24,9 +24,9 @@ and/or the largest values are replaced by less extreme values.
 Thereby the substitute values are the most extreme retained values.
 }
 \seealso{
-Other Outliers: 
-\code{\link{outlier_tukey}()},
-\code{\link{outlier_zscore}()},
-\code{\link{outlier_zscore_plot}()}
+Other Outliers:
+\code{\link[=outlier_tukey]{outlier_tukey()}},
+\code{\link[=outlier_zscore]{outlier_zscore()}},
+\code{\link[=outlier_zscore_plot]{outlier_zscore_plot()}}
 }
 \concept{Outliers}

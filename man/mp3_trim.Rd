@@ -30,8 +30,8 @@ This function trims MP3 files given a start and/or end numeric
 timestamp. Requires \code{ffmpeg} installed in your machine.
 }
 \seealso{
-Other Audio: 
-\code{\link{mp3_get}()},
-\code{\link{mp3_update_tags}()}
+Other Audio:
+\code{\link[=mp3_get]{mp3_get()}},
+\code{\link[=mp3_update_tags]{mp3_update_tags()}}
 }
 \concept{Audio}

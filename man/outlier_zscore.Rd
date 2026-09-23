@@ -26,9 +26,9 @@ outliers based on z-score if its absolute value of
 default z-score is higher then the threshold (popular choice is 3).
 }
 \seealso{
-Other Outliers: 
-\code{\link{outlier_tukey}()},
-\code{\link{outlier_zscore_plot}()},
-\code{\link{winsorize}()}
+Other Outliers:
+\code{\link[=outlier_tukey]{outlier_tukey()}},
+\code{\link[=outlier_zscore_plot]{outlier_zscore_plot()}},
+\code{\link[=winsorize]{winsorize()}}
 }
 \concept{Outliers}

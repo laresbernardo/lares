@@ -25,9 +25,9 @@ constant (popular choice is 1.5). A value is an outlier based
 on Tukey’s fences when its value does not lie in non-outlier range.
 }
 \seealso{
-Other Outliers: 
-\code{\link{outlier_zscore}()},
-\code{\link{outlier_zscore_plot}()},
-\code{\link{winsorize}()}
+Other Outliers:
+\code{\link[=outlier_zscore]{outlier_zscore()}},
+\code{\link[=outlier_zscore_plot]{outlier_zscore_plot()}},
+\code{\link[=winsorize]{winsorize()}}
 }
 \concept{Outliers}

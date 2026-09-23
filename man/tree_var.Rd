@@ -96,31 +96,31 @@ tree_var(dft, Survived_TRUE, explain = FALSE, cex = 0.8)$plot()
 tree_var(dft[, c("Pclass", "Fare", "Age")], Pclass, ohse = FALSE)$plot()
 }
 \seealso{
-Other Exploratory: 
-\code{\link{corr_var}()},
-\code{\link{crosstab}()},
-\code{\link{df_str}()},
-\code{\link{distr}()},
-\code{\link{freqs}()},
-\code{\link{freqs_df}()},
-\code{\link{freqs_list}()},
-\code{\link{freqs_plot}()},
-\code{\link{lasso_vars}()},
-\code{\link{missingness}()},
-\code{\link{plot_cats}()},
-\code{\link{plot_df}()},
-\code{\link{plot_nums}()}
+Other Exploratory:
+\code{\link[=corr_var]{corr_var()}},
+\code{\link[=crosstab]{crosstab()}},
+\code{\link[=df_str]{df_str()}},
+\code{\link[=distr]{distr()}},
+\code{\link[=freqs]{freqs()}},
+\code{\link[=freqs_df]{freqs_df()}},
+\code{\link[=freqs_list]{freqs_list()}},
+\code{\link[=freqs_plot]{freqs_plot()}},
+\code{\link[=lasso_vars]{lasso_vars()}},
+\code{\link[=missingness]{missingness()}},
+\code{\link[=plot_cats]{plot_cats()}},
+\code{\link[=plot_df]{plot_df()}},
+\code{\link[=plot_nums]{plot_nums()}}
 
-Other Visualization: 
-\code{\link{distr}()},
-\code{\link{freqs}()},
-\code{\link{freqs_df}()},
-\code{\link{freqs_list}()},
-\code{\link{freqs_plot}()},
-\code{\link{noPlot}()},
-\code{\link{plot_chord}()},
-\code{\link{plot_survey}()},
-\code{\link{plot_timeline}()}
+Other Visualization:
+\code{\link[=distr]{distr()}},
+\code{\link[=freqs]{freqs()}},
+\code{\link[=freqs_df]{freqs_df()}},
+\code{\link[=freqs_list]{freqs_list()}},
+\code{\link[=freqs_plot]{freqs_plot()}},
+\code{\link[=noPlot]{noPlot()}},
+\code{\link[=plot_chord]{plot_chord()}},
+\code{\link[=plot_survey]{plot_survey()}},
+\code{\link[=plot_timeline]{plot_timeline()}}
 }
 \concept{Exploratory}
 \concept{Visualization}

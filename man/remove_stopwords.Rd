@@ -28,14 +28,14 @@ x <- c("A brown fox jumps over a dog.", "Another brown dog.")
 remove_stopwords(x, stop_words = c("dog", "brown", "a"), exclude = "\\\\.")
 }
 \seealso{
-Other Text Mining: 
-\code{\link{cleanText}()},
-\code{\link{ngrams}()},
-\code{\link{replaceall}()},
-\code{\link{sentimentBreakdown}()},
-\code{\link{textCloud}()},
-\code{\link{textFeats}()},
-\code{\link{textTokenizer}()},
-\code{\link{topics_rake}()}
+Other Text Mining:
+\code{\link[=cleanText]{cleanText()}},
+\code{\link[=ngrams]{ngrams()}},
+\code{\link[=replaceall]{replaceall()}},
+\code{\link[=sentimentBreakdown]{sentimentBreakdown()}},
+\code{\link[=textCloud]{textCloud()}},
+\code{\link[=textFeats]{textFeats()}},
+\code{\link[=textTokenizer]{textTokenizer()}},
+\code{\link[=topics_rake]{topics_rake()}}
 }
 \concept{Text Mining}

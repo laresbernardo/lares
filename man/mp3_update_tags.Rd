@@ -53,8 +53,8 @@ mp3_update_tags(
 }
 }
 \seealso{
-Other Audio: 
-\code{\link{mp3_get}()},
-\code{\link{mp3_trim}()}
+Other Audio:
+\code{\link[=mp3_get]{mp3_get()}},
+\code{\link[=mp3_trim]{mp3_trim()}}
 }
 \concept{Audio}

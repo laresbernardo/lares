@@ -97,9 +97,9 @@ p + theme_lares(clean = TRUE)
 }
 }
 \seealso{
-Other Themes: 
-\code{\link{gg_fill_customs}()},
-\code{\link{lares_pal}()},
-\code{\link{plot_palette}()}
+Other Themes:
+\code{\link[=gg_fill_customs]{gg_fill_customs()}},
+\code{\link[=lares_pal]{lares_pal()}},
+\code{\link[=plot_palette]{plot_palette()}}
 }
 \concept{Themes}

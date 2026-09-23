@@ -56,11 +56,11 @@ df <- errors(dfr$regr$tag, dfr$regr$score)
 head(df)
 }
 \seealso{
-Other Model metrics: 
-\code{\link{ROC}()},
-\code{\link{conf_mat}()},
-\code{\link{gain_lift}()},
-\code{\link{loglossBinary}()},
-\code{\link{model_metrics}()}
+Other Model metrics:
+\code{\link[=ROC]{ROC()}},
+\code{\link[=conf_mat]{conf_mat()}},
+\code{\link[=gain_lift]{gain_lift()}},
+\code{\link[=loglossBinary]{loglossBinary()}},
+\code{\link[=model_metrics]{model_metrics()}}
 }
 \concept{Model metrics}

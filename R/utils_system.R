@@ -173,17 +173,25 @@ listfiles <- function(folder = getwd(),
 #' @family Tools
 #' @return Character. Result of your IP address based on ipify.org
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' myip()
 #' }
 #' @export
 myip <- function() {
   if (!haveInternet()) {
-    message("No internet connetion...")
+    message("No internet connection...")
     invisible(NULL)
   } else {
     ipify <- "https://api.ipify.org/"
-    try(content(GET(ipify), encoding = "UTF-8"))
+    res <- tryCatch(
+      GET(ipify, timeout(5)),
+      error = function(e) NULL
+    )
+    if (!is.null(res) && status_code(res) == 200) {
+      trimws(content(res, as = "text", encoding = "UTF-8"))
+    } else {
+      invisible(NULL)
+    }
   }
 }
 

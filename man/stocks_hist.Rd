@@ -67,19 +67,19 @@ plot(df)
 }
 }
 \seealso{
-Other Investment: 
-\code{\link{etf_sector}()},
-\code{\link{splot_summary}()},
-\code{\link{stocks_file}()}
+Other Investment:
+\code{\link[=etf_sector]{etf_sector()}},
+\code{\link[=splot_summary]{splot_summary()}},
+\code{\link[=stocks_file]{stocks_file()}}
 
-Other Scrapper: 
-\code{\link{filesGD}()},
-\code{\link{gtrends_related}()},
-\code{\link{holidays}()},
-\code{\link{ip_data}()},
-\code{\link{mp3_get}()},
-\code{\link{readGS}()},
-\code{\link{splot_summary}()}
+Other Scrapper:
+\code{\link[=filesGD]{filesGD()}},
+\code{\link[=gtrends_related]{gtrends_related()}},
+\code{\link[=holidays]{holidays()}},
+\code{\link[=ip_data]{ip_data()}},
+\code{\link[=mp3_get]{mp3_get()}},
+\code{\link[=readGS]{readGS()}},
+\code{\link[=splot_summary]{splot_summary()}}
 }
 \concept{Investment}
 \concept{Scrapper}

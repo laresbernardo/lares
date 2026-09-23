@@ -30,7 +30,7 @@ ci_var(dft, Fare, Pclass)
 ci_var(dft, Fare, Pclass, conf = 0.99)
 }
 \seealso{
-Other Confidence: 
-\code{\link{ci_lower}()}
+Other Confidence:
+\code{\link[=ci_lower]{ci_lower()}}
 }
 \concept{Confidence}

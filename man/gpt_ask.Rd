@@ -148,26 +148,26 @@ gpt_history()
 }
 }
 \seealso{
-Other API: 
-\code{\link{bring_api}()},
-\code{\link{fb_accounts}()},
-\code{\link{fb_ads}()},
-\code{\link{fb_creatives}()},
-\code{\link{fb_insights}()},
-\code{\link{fb_process}()},
-\code{\link{fb_report_check}()},
-\code{\link{fb_rf}()},
-\code{\link{fb_token}()},
-\code{\link{gemini_ask}()},
-\code{\link{queryGA}()},
-\code{\link{slackSend}()}
+Other API:
+\code{\link[=bring_api]{bring_api()}},
+\code{\link[=fb_accounts]{fb_accounts()}},
+\code{\link[=fb_ads]{fb_ads()}},
+\code{\link[=fb_creatives]{fb_creatives()}},
+\code{\link[=fb_insights]{fb_insights()}},
+\code{\link[=fb_process]{fb_process()}},
+\code{\link[=fb_report_check]{fb_report_check()}},
+\code{\link[=fb_rf]{fb_rf()}},
+\code{\link[=fb_token]{fb_token()}},
+\code{\link[=gemini_ask]{gemini_ask()}},
+\code{\link[=queryGA]{queryGA()}},
+\code{\link[=slackSend]{slackSend()}}
 
-Other ChatGPT: 
-\code{\link{gpt_prompter}()}
+Other ChatGPT:
+\code{\link[=gpt_prompter]{gpt_prompter()}}
 
-Other LLM: 
-\code{\link{gemini_ask}()},
-\code{\link{gpt_prompter}()}
+Other LLM:
+\code{\link[=gemini_ask]{gemini_ask()}},
+\code{\link[=gpt_prompter]{gpt_prompter()}}
 }
 \concept{API}
 \concept{ChatGPT}

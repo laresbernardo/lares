@@ -38,14 +38,14 @@ reduce_tsne(df, ignore = "id", max_iter = 800, perplexity = 20)
 }
 }
 \seealso{
-Other Dimensionality: 
-\code{\link{reduce_pca}()}
+Other Dimensionality:
+\code{\link[=reduce_pca]{reduce_pca()}}
 
-Other Clusters: 
-\code{\link{clusterKmeans}()},
-\code{\link{clusterOptimalK}()},
-\code{\link{clusterVisualK}()},
-\code{\link{reduce_pca}()}
+Other Clusters:
+\code{\link[=clusterKmeans]{clusterKmeans()}},
+\code{\link[=clusterOptimalK]{clusterOptimalK()}},
+\code{\link[=clusterVisualK]{clusterVisualK()}},
+\code{\link[=reduce_pca]{reduce_pca()}}
 }
 \concept{Clusters}
 \concept{Dimensionality}
