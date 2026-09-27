@@ -101,19 +101,24 @@ grouped by date.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># For today (or any one single date)</span></span></span>
 <span class="r-in"><span><span class="fu">get_currency</span><span class="op">(</span><span class="st">"USD/COP"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         date    rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2026-07-01 3392.47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in getSymbols.yahoo(Symbols = "USDCOP=X", env = NULL, verbose = FALSE,  : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Unable to import “USDCOP=X”.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attempt to set an attribute on NULL</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Error in getSymbols.yahoo(Symbols = "USDCOP=X", env = NULL, verbose = FALSE,  : </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   Unable to import “USDCOP=X”.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> attempt to set an attribute on NULL</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in x[, 1]:</span> incorrect number of dimensions</span>
 <span class="r-in"><span><span class="co"># For multiple dates</span></span></span>
 <span class="r-in"><span><span class="fu">get_currency</span><span class="op">(</span><span class="st">"EUR/USD"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         date     rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2026-06-24 1.135344</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2026-06-25 1.136389</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2026-06-26 1.136389</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2026-06-27 1.136389</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2026-06-28 1.138446</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2026-06-29 1.141891</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2026-06-30 1.142727</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8 2026-07-01 1.142727</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2026-09-20 1.147934</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2026-09-21 1.146434</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2026-09-22 1.144715</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2026-09-23 1.138291</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2026-09-24 1.137359</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2026-09-25 1.137359</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2026-09-26 1.139991</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8 2026-09-27 1.139991</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
@@ -126,7 +131,7 @@ grouped by date.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

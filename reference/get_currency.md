@@ -49,18 +49,23 @@ by date.
 # \donttest{
 # For today (or any one single date)
 get_currency("USD/COP", from = Sys.Date())
-#>         date    rate
-#> 1 2026-07-01 3392.47
+#> Error in getSymbols.yahoo(Symbols = "USDCOP=X", env = NULL, verbose = FALSE,  : 
+#>   Unable to import “USDCOP=X”.
+#> attempt to set an attribute on NULL
+#> Warning: Error in getSymbols.yahoo(Symbols = "USDCOP=X", env = NULL, verbose = FALSE,  : 
+#>   Unable to import “USDCOP=X”.
+#> attempt to set an attribute on NULL
+#> Error in x[, 1]: incorrect number of dimensions
 # For multiple dates
 get_currency("EUR/USD", from = Sys.Date() - 7, fill = TRUE)
 #>         date     rate
-#> 1 2026-06-24 1.135344
-#> 2 2026-06-25 1.136389
-#> 3 2026-06-26 1.136389
-#> 4 2026-06-27 1.136389
-#> 5 2026-06-28 1.138446
-#> 6 2026-06-29 1.141891
-#> 7 2026-06-30 1.142727
-#> 8 2026-07-01 1.142727
+#> 1 2026-09-20 1.147934
+#> 2 2026-09-21 1.146434
+#> 3 2026-09-22 1.144715
+#> 4 2026-09-23 1.138291
+#> 5 2026-09-24 1.137359
+#> 6 2026-09-25 1.137359
+#> 7 2026-09-26 1.139991
+#> 8 2026-09-27 1.139991
 # }
 ```

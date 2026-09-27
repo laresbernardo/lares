@@ -111,16 +111,16 @@ date_feats(df, drop = TRUE, quiet = TRUE) %>% head(10)
 #> # A tibble: 10 × 18
 #>    dates_year dates_month dates_day dates_week dates_weekday dates_weekend
 #>         <dbl>       <dbl>     <int>      <dbl> <chr>         <lgl>        
-#>  1       2025          12        26         52 Fri           FALSE        
-#>  2       2025           7        14         28 Mon           FALSE        
-#>  3       2026           1        11          2 Sun           TRUE         
-#>  4       2026           5         2         18 Sat           TRUE         
-#>  5       2025          10        26         43 Sun           TRUE         
-#>  6       2026           4        25         17 Sat           TRUE         
-#>  7       2026           2        14          7 Sat           TRUE         
-#>  8       2026           3         1          9 Sun           TRUE         
-#>  9       2026           6        30         26 Tue           FALSE        
-#> 10       2025          11        30         48 Sun           TRUE         
+#>  1       2026           3        24         12 Tue           FALSE        
+#>  2       2025          10        10         41 Fri           FALSE        
+#>  3       2026           4         9         15 Thu           FALSE        
+#>  4       2026           7        29         30 Wed           FALSE        
+#>  5       2026           1        22          4 Thu           FALSE        
+#>  6       2026           7        22         29 Wed           FALSE        
+#>  7       2026           5        13         19 Wed           FALSE        
+#>  8       2026           5        28         22 Thu           FALSE        
+#>  9       2026           9        26         39 Sat           TRUE         
+#> 10       2026           2        26          9 Thu           FALSE        
 #> # ℹ 12 more variables: dates_year_day <int>, times_year <dbl>,
 #> #   times_month <dbl>, times_day <int>, times_week <dbl>, times_weekday <chr>,
 #> #   times_weekend <lgl>, times_year_day <int>, times_hour <int>,

@@ -109,7 +109,7 @@ toc()
 
 # Multiple tic tocs
 tic(id = "two", quiet = FALSE)
-#> Tic `id = two` start time: 2026-07-01 18:14:17.065635
+#> Tic `id = two` start time: 2026-09-27 07:32:45.284792
 Sys.sleep(0.2)
 toc(id = "two")
 #> Elapsed time: 0.202s
