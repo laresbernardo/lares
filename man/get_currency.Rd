@@ -27,14 +27,19 @@ previous values?}
 }
 \value{
 data.frame. Result of fetching online data for \code{currency_pair}
-grouped by date.
+grouped by date. A single-day request returns the last available quote
+within the previous 14 days when that day is not quoted. If the provider
+cannot be reached or has no quotes, returns an empty data.frame with
+\code{date} and \code{rate} columns and an informative message.
+No cached quotes are used when the provider is unavailable.
 }
 \description{
 This function lets the user download historical currency exchange
 rate between two currencies.
 }
 \examples{
-\donttest{
+\dontrun{
+# Requires an external currency provider; do not run in automated checks.
 # For today (or any one single date)
 get_currency("USD/COP", from = Sys.Date())
 # For multiple dates

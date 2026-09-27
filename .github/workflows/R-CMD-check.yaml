@@ -46,6 +46,9 @@ jobs:
         with:
           extra-packages: rcmdcheck
 
+      - name: Test provider failures without network
+        run: Rscript tests/test_network_graceful.R
+
       - uses: r-lib/actions/check-r-package@v2
 
       - name: Upload check results

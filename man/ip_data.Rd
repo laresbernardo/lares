@@ -22,7 +22,8 @@ organization, country, state or region, county, city, ZIP postal code,
 weather station, coordinates, Timezone, local time, languages, and currency.
 }
 \examples{
-\donttest{
+\dontrun{
+# Requires db-ip.com; do not run in automated checks.
 ip_data("163.114.132.0")
 ip_data(ip = c(myip(), "201.244.197.199"), quiet = TRUE)
 }

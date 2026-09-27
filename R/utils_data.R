@@ -13,7 +13,8 @@
 #' @return data.frame. Each row is an unique \code{ip} address,
 #' and columns will bee created for all the additional information found.
 #' @examples
-#' \donttest{
+#' \dontrun{
+#' # Requires db-ip.com; do not run in automated checks.
 #' ip_data("163.114.132.0")
 #' ip_data(ip = c(myip(), "201.244.197.199"), quiet = TRUE)
 #' }
@@ -29,12 +30,24 @@ ip_data <- function(ip = myip(), quiet = FALSE) {
     output <- data.frame()
     for (i in seq_along(ip)) {
       url <- paste0("https://db-ip.com/", ip[i])
-      scrap <- content(GET(url)) %>% html_table()
-      clean <- bind_rows(scrap[[1]], scrap[[3]])
-      row <- data.frame(t(clean[, 2]))
-      colnames(row) <- clean$X1
-      row <- data.frame(id = ip[i], row)
-      output <- bind_rows(output, row)
+      row <- tryCatch({
+        response <- GET(url)
+        stop_for_status(response)
+        scrap <- html_table(content(response))
+        if (length(scrap) < 3 || ncol(scrap[[1]]) < 2 ||
+            ncol(scrap[[3]]) < 2) {
+          stop("IP provider page layout changed")
+        }
+        clean <- bind_rows(scrap[[1]], scrap[[3]])
+        if (ncol(clean) < 2 || !nrow(clean)) stop("No IP data returned")
+        result <- data.frame(t(clean[, 2]))
+        colnames(result) <- clean[[1]]
+        data.frame(id = ip[i], result)
+      }, error = function(e) {
+        message("IP data unavailable for ", ip[i], ": ", conditionMessage(e))
+        NULL
+      })
+      if (!is.null(row)) output <- bind_rows(output, row)
       if (length(ip) > 1 && !quiet) statusbar(i, length(ip), ip[i])
     }
     output <- cleanNames(output)
