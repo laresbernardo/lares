@@ -57,25 +57,7 @@ Other Data Wrangling:
 ``` r
 library(dplyr)
 #> 
-#> ######################### Warning from 'xts' package ##########################
-#> #                                                                             #
-#> # The dplyr lag() function breaks how base R's lag() function is supposed to  #
-#> # work, which breaks lag(my_xts). Calls to lag(my_xts) that you type or       #
-#> # source() into this session won't work correctly.                            #
-#> #                                                                             #
-#> # Use stats::lag() to make sure you're not using dplyr::lag(), or you can add #
-#> # conflictRules('dplyr', exclude = 'lag') to your .Rprofile to stop           #
-#> # dplyr from breaking base R's lag() function.                                #
-#> #                                                                             #
-#> # Code in packages is not affected. It's protected by R's namespace mechanism #
-#> # Set `options(xts.warn_dplyr_breaks_lag = FALSE)` to suppress this warning.  #
-#> #                                                                             #
-#> ###############################################################################
-#> 
 #> Attaching package: ‘dplyr’
-#> The following objects are masked from ‘package:xts’:
-#> 
-#>     first, last
 #> The following objects are masked from ‘package:stats’:
 #> 
 #>     filter, lag

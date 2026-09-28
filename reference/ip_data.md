@@ -79,10 +79,9 @@ Other Scrapper:
 ## Examples
 
 ``` r
-# \donttest{
+if (FALSE) { # \dontrun{
+# Requires db-ip.com; do not run in automated checks.
 ip_data("163.114.132.0")
-#> Error in scrap[[1]]: subscript out of bounds
 ip_data(ip = c(myip(), "201.244.197.199"), quiet = TRUE)
-#> Error in scrap[[1]]: subscript out of bounds
-# }
+} # }
 ```

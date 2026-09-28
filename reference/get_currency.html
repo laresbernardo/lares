@@ -15,7 +15,7 @@ rate between two currencies."><meta property="og:image" content="https://laresbe
 
     <a class="navbar-brand me-2" href="../index.html">lares</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.4.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">5.4.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,33 +93,22 @@ previous values?</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>data.frame. Result of fetching online data for <code>currency_pair</code>
-grouped by date.</p>
+grouped by date. A single-day request returns the last available quote
+within the previous 14 days when that day is not quoted. If the provider
+cannot be reached or has no quotes, returns an empty data.frame with
+<code>date</code> and <code>rate</code> columns and an informative message.
+No cached quotes are used when the provider is unavailable.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># Requires an external currency provider; do not run in automated checks.</span></span></span>
 <span class="r-in"><span><span class="co"># For today (or any one single date)</span></span></span>
 <span class="r-in"><span><span class="fu">get_currency</span><span class="op">(</span><span class="st">"USD/COP"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in getSymbols.yahoo(Symbols = "USDCOP=X", env = NULL, verbose = FALSE,  : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Unable to import “USDCOP=X”.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attempt to set an attribute on NULL</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Error in getSymbols.yahoo(Symbols = "USDCOP=X", env = NULL, verbose = FALSE,  : </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   Unable to import “USDCOP=X”.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> attempt to set an attribute on NULL</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in x[, 1]:</span> incorrect number of dimensions</span>
 <span class="r-in"><span><span class="co"># For multiple dates</span></span></span>
 <span class="r-in"><span><span class="fu">get_currency</span><span class="op">(</span><span class="st">"EUR/USD"</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         date     rate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2026-09-20 1.147934</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2026-09-21 1.146434</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2026-09-22 1.144715</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2026-09-23 1.138291</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2026-09-24 1.137359</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2026-09-25 1.137359</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 2026-09-26 1.139991</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8 2026-09-27 1.139991</span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
