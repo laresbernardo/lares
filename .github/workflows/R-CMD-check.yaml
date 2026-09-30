@@ -9,6 +9,11 @@ on:
 
 name: R-CMD-check
 
+# Cancel only superseded PR checks. Main pushes remain independent.
+concurrency:
+  group: r-check-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}

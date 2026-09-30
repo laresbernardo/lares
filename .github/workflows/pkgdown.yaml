@@ -14,9 +14,10 @@ name: documentation
 jobs:
   documentation:
     runs-on: ubuntu-latest
-    # Only restrict concurrency for non-PR jobs
+    # Serialize deployments; cancel only superseded builds of the same PR.
     concurrency:
-      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
+      group: pkgdown-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'deploy' }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     permissions:
