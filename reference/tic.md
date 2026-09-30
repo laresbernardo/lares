@@ -105,11 +105,11 @@ Other Tools:
 tic()
 Sys.sleep(0.1)
 toc()
-#> Elapsed time: 0.102s
+#> Elapsed time: 0.101s
 
 # Multiple tic tocs
 tic(id = "two", quiet = FALSE)
-#> Tic `id = two` start time: 2026-09-28 08:32:53.072852
+#> Tic `id = two` start time: 2026-09-30 13:32:37.710396
 Sys.sleep(0.2)
 toc(id = "two")
 #> Elapsed time: 0.202s
