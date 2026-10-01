@@ -18,5 +18,5 @@ Useful links:
 
 }
 \author{
-Bernardo Lares (lares@bervos.org)
+Bernardo Lares (hello@bervos.org)
 }

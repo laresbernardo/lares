@@ -5,7 +5,7 @@
 #' @md
 #' @name lares
 #' @docType package
-#' @author Bernardo Lares (lares@@bervos.org)
+#' @author Bernardo Lares (hello@@bervos.org)
 #' @importFrom dplyr %>% all_of any_of arrange as_tibble bind_cols bind_rows case_when
 #' contains count desc distinct distinct_at everything filter first group_by inner_join
 #' lag last left_join mutate mutate_all mutate_at mutate_if n ntile ensym across
