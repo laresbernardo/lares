@@ -72,4 +72,4 @@ remotes::install_github("laresbernardo/lares", dependencies = TRUE)
 - Browse all functions in the [online reference](https://laresbernardo.github.io/lares/reference/index.html).
 - Use `?lares::function_name` in RStudio for detailed help on any function.
 - Found a bug or have a feature request? [Open an issue](https://github.com/laresbernardo/lares/issues).
-- For questions or suggestions, reach out to [laresbernardo](mailto:hello@bervos.org).
+- For questions or suggestions, reach out to [laresbernardo](mailto:lares@bervos.org).
