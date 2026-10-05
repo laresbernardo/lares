@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+  release:
+    types: [published]
   pull_request:
     branches:
       - main
@@ -23,10 +25,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        config:
-          #- {os: windows-latest, r: 'release'}
-          - {os: macOS-latest, r: 'release'}
-          - {os: ubuntu-latest,   r: 'release'}
+        # macOS consumes 10x included minutes. Keep PR checks on Ubuntu;
+        # validate both platforms on main pushes and published releases.
+        config: ${{ fromJSON(github.event_name == 'pull_request' && '[{"os":"ubuntu-latest","r":"release"}]' || '[{"os":"macOS-latest","r":"release"},{"os":"ubuntu-latest","r":"release"}]') }}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
