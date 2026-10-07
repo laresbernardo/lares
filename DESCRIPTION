@@ -3,8 +3,8 @@ Type: Package
 Title: Lean Analytics and Robust Exploration Sidekick
 Version: 5.4.0.9002
 Authors@R: c(
-    person("Bernardo", "Lares", , "laresbernardo@gmail.com", c("aut", "cre")))
-Maintainer: Bernardo Lares <laresbernardo@gmail.com>
+    person("Bernardo", "Lares", , "lares@bervos.org", c("aut", "cre")))
+Maintainer: Bernardo Lares <lares@bervos.org>
 Description: Auxiliary package for better/faster analytics, visualization, data mining, and machine
     learning tasks. With a wide variety of family functions, like Machine Learning, Data Wrangling,
     Marketing Mix Modeling (Robyn), Exploratory, API, and Scrapper, it helps the analyst or 
