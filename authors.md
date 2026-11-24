@@ -10,12 +10,12 @@ Source:
 [`DESCRIPTION`](https://github.com/laresbernardo/lares/blob/main/DESCRIPTION)
 
 Lares B (2026). *lares: Lean Analytics and Robust Exploration Sidekick*.
-R package version 5.4.0.9003, <https://github.com/laresbernardo/lares>.
+R package version 5.4.0.9004, <https://github.com/laresbernardo/lares>.
 
     @Manual{,
       title = {lares: Lean Analytics and Robust Exploration Sidekick},
       author = {Bernardo Lares},
       year = {2026},
-      note = {R package version 5.4.0.9003},
+      note = {R package version 5.4.0.9004},
       url = {https://github.com/laresbernardo/lares},
     }
